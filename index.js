@@ -19,15 +19,36 @@ restService.post('/hook', function (req, res) {
 
             if (requestBody.result) {
                 speech = '';
+                
+                
+                switch(requestBody.result.parameters.department){
+                        
+                    case 'Cardiology':
+                            speech = 'Cardiology Doctors: Dipanik, Moumita';
+                            break;
+                    case 'Paediatrics':
+                            speech = 'Paediatrics Doctors: Avinash, Anindita';
+                            break;
+                    case 'Neurology':
+                            speech = 'Neurology Doctors: Taiseef, Sutrishna';
+                            break;
+                            
+                    default:
+                            speech = 'General Doctors: Biswajit';
+                }
+                            
+                                  
 
-                if (requestBody.result.fulfillment) {
+              /*  if (requestBody.result.fulfillment) {
                     speech += requestBody.result.fulfillment.speech;
                     speech += ' ';
-                }
+                }*/
 
                 if (requestBody.result.action) {
                     speech += 'action: ' + requestBody.result.action;
                 }
+                                
+                
             }
         }
 
@@ -36,7 +57,7 @@ restService.post('/hook', function (req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
-            source: 'apiai-webhook-sample'
+            source: 'bookjent'
         });
     } catch (err) {
         console.error("Can't process request", err);
