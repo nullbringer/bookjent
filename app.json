@@ -1,7 +1,7 @@
 {
-  "name": "API.AI webhook demonstration",
-  "description": "API.AI webhook demonstration",
-  "repository": "https://github.com/api-ai/apiai-webhook-sample",
+  "name": "Bookjent Webhook",
+  "description": "Webhook implementation of a booking chatbot",
+  "repository": "https://github.com/urbangeek/bookjent",
   "logo": "http://xvir.github.io/img/apiai.png",
   "keywords": ["api.ai", "natural language"]
 }
