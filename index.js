@@ -2,10 +2,16 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 
 const restService = express();
 restService.use(bodyParser.json());
+
+
+const departments = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'));
+const doctors = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
+
 
 restService.post('/hook', function (req, res) {
 
@@ -21,7 +27,7 @@ restService.post('/hook', function (req, res) {
                 speech = '';
                 
                 
-                switch(requestBody.result.parameters.department){
+            /*    switch(requestBody.result.parameters.department){                        
                         
                     case 'Cardiology':
                             speech = 'Cardiology Doctors: Dipanik, Moumita';
@@ -35,18 +41,26 @@ restService.post('/hook', function (req, res) {
                             
                     default:
                             speech = 'General Doctors: Biswajit';
-                }
+                }*/
+                
+                
+             
+                
+                 var doctorForDept = doctors.filter(function(doc){
+
+                    return (doc.department === requestBody.result.parameters.department)
+
+                });   
                             
                                   
+                
+                
+                
+                doctorForDept.forEach(function(doc){
+                    speech += doc.title + '<br />';
+                    
+                });
 
-              /*  if (requestBody.result.fulfillment) {
-                    speech += requestBody.result.fulfillment.speech;
-                    speech += ' ';
-                }*/
-
-                if (requestBody.result.action) {
-                    speech += 'action: ' + requestBody.result.action;
-                }
                                 
                 
             }
