@@ -2,10 +2,16 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 
 const restService = express();
 restService.use(bodyParser.json());
+
+
+const departments = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'));
+const doctors = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
+
 
 restService.post('/hook', function (req, res) {
 
@@ -17,17 +23,32 @@ restService.post('/hook', function (req, res) {
         if (req.body) {
             var requestBody = req.body;
 
-            if (requestBody.result) {
-                speech = '';
+            if (requestBody.result.action === 'search.doctorsByDepartment') {
+                speech = '';                
 
-                if (requestBody.result.fulfillment) {
-                    speech += requestBody.result.fulfillment.speech;
-                    speech += ' ';
-                }
+                var requestedDepartment = departments.filter(function(dept){
+                    return (dept.value === requestBody.result.parameters.department);
+                });
+                
+                
+                requestedDepartment = requestedDepartment || 'GEN'
+                
+                var doctorForDept = doctors.filter(function(doc){
+                    return (doc.department === requestBody.result.parameters.department);
+                });   
+                
+                var doctorNames = [];
+                doctorForDept.forEach(function(doc){
+                    doctorNames.push(doc.title);
+                    
+                });             
+                
+                
+                speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: '; 
+                speech += doctorNames.join(',');
 
-                if (requestBody.result.action) {
-                    speech += 'action: ' + requestBody.result.action;
-                }
+                                
+                
             }
         }
 
@@ -36,7 +57,7 @@ restService.post('/hook', function (req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
-            source: 'apiai-webhook-sample'
+            source: 'bookjent'
         });
     } catch (err) {
         console.error("Can't process request", err);

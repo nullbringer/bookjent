@@ -1,0 +1,58 @@
+[
+  {
+    "value": "CDO",
+    "title": "Cardiology",
+    "synonyms": [
+      "Cardiology",
+      "cardio",
+      "chest pain",
+      "heart"
+    ]
+  },
+  {
+    "value": "GYN",
+    "title": "Gynaecology",
+    "synonyms": [
+      "Gynaecology",
+      "Gynaecologist",
+      "woman",
+      "women",
+      "pregnant"
+    ]
+  },
+  {
+    "value": "PDE",
+    "title": "Paediatrics",
+    "synonyms": [
+      "Paediatrics",
+      "kid",
+      "kids",
+      "child",
+      "children"
+    ]
+  },
+  {
+    "value": "ORT",
+    "title": "Orthopaedics",
+    "synonyms": [
+      "Orthopaedics",
+      "bone"
+    ]
+  },
+  {
+    "value": "NEU",
+    "title": "Neurology",
+    "synonyms": [
+      "Neurology",
+      "brain"
+    ]
+  },
+  {
+    "value": "GEN",
+    "title": "General",
+    "synonyms": [
+      "General",
+      "Gen"
+    ]
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "value": "DOC_CDO_1",
+    "department": "CDO",
+    "title": "Daisy Dunn",
+    "synonyms": "Daisy Dunn,daisy,dunn"
+  },
+  {
+    "value": "DOC_GYN_2",
+    "department": "GYN",
+    "title": "Frances Patton",
+    "synonyms": "Frances Patton,Frances,Patton, francis, franc frank, paton"
+  },
+  {
+    "value": "DOC_PDE_3",
+    "department": "PDE",
+    "title": "Brett Phillips",
+    "synonyms": "Brett Phillips,brett,bret,phillips,philips,phillip,philip"
+  },
+  {
+    "value": "DOC_ORT_4",
+    "department": "ORT",
+    "title": "James Hart",
+    "synonyms": "James Hart,james,hart"
+  },
+  {
+    "value": "DOC_NEU_5",
+    "department": "NEU",
+    "title": "Pedro Harris",
+    "synonyms": "Pedro Harris,pedro,harris"
+  },
+  {
+    "value": "DOC_GEN_6",
+    "department": "GEN",
+    "title": "Christa Lawrence",
+    "synonyms": "Christa Lawrence,Christa,Lawrence"
+  },
+  {
+    "value": "DOC_CDO_7",
+    "department": "CDO",
+    "title": "Nickolas Christensen",
+    "synonyms": "Nickolas Christensen,Nickolas, Christensen, Nick"
+  },
+  {
+    "value": "DOC_GYN_8",
+    "department": "GYN",
+    "title": "Donovan Lindsey",
+    "synonyms": "Donovan Lindsey,Donovan,Lindsey,Don"
+  },
+  {
+    "value": "DOC_PDE_9",
+    "department": "PDE",
+    "title": "Shannon Howell",
+    "synonyms": "Shannon Howell,Shannon,Howell,Shanon,Howel"
+  },
+  {
+    "value": "DOC_ORT_10",
+    "department": "ORT",
+    "title": "Sandy Daniels",
+    "synonyms": "Sandy Daniels,Sandy,Daniels,Daniel"
+  },
+  {
+    "value": "DOC_NEU_11",
+    "department": "NEU",
+    "title": "Tori Bates",
+    "synonyms": "Tori Bates,Tori,Bates"
+  },
+  {
+    "value": "DOC_GEN_12",
+    "department": "GEN",
+    "title": "Clint Parsons",
+    "synonyms": "Clint Parsons,Clint,Parsons,Parson"
+  }
+]
