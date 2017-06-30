@@ -23,43 +23,29 @@ restService.post('/hook', function (req, res) {
         if (req.body) {
             var requestBody = req.body;
 
-            if (requestBody.result) {
-                speech = '';
-                
-                
-            /*    switch(requestBody.result.parameters.department){                        
-                        
-                    case 'Cardiology':
-                            speech = 'Cardiology Doctors: Dipanik, Moumita';
-                            break;
-                    case 'Paediatrics':
-                            speech = 'Paediatrics Doctors: Avinash, Anindita';
-                            break;
-                    case 'Neurology':
-                            speech = 'Neurology Doctors: Taiseef, Sutrishna';
-                            break;
-                            
-                    default:
-                            speech = 'General Doctors: Biswajit';
-                }*/
-                
-                
-             
-                
-                 var doctorForDept = doctors.filter(function(doc){
+            if (requestBody.result.action === 'search.doctorsByDepartment') {
+                speech = '';                
 
-                    return (doc.department === requestBody.result.parameters.department)
-
-                });   
-                            
-                                  
-                
-                
-                
-                doctorForDept.forEach(function(doc){
-                    speech += doc.title + '<br />';
-                    
+                var requestedDepartment = departments.filter(function(dept){
+                    return (dept.value === requestBody.result.parameters.department);
                 });
+                
+                
+                requestedDepartment = requestedDepartment || 'GEN'
+                
+                var doctorForDept = doctors.filter(function(doc){
+                    return (doc.department === requestBody.result.parameters.department);
+                });   
+                
+                var doctorNames = [];
+                doctorForDept.forEach(function(doc){
+                    doctorNames.push(doc.title);
+                    
+                });             
+                
+                
+                speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: '; 
+                speech += doctorNames.join(',');
 
                                 
                 
