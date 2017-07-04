@@ -112,6 +112,9 @@ restService.post('/hook', function (req, res) {
                 
                   
                 
+            } else if (requestBody.result.action === 'choose.doctor') {
+                
+                
             }
         }
 
