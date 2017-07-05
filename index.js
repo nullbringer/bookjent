@@ -113,9 +113,9 @@ restService.post('/hook', function (req, res) {
                   
                 
             } else if (requestBody.result.action === 'choose.doctor') {
-                speech = 'ddfsdfdsf';
+               
                 
-               /* var doctorCode = requestBody.result.parameters['dept-doctors'];
+                var doctorCode = requestBody.result.parameters['dept-doctors'];
                 
                 var selectedDoctor = doctors.filter(function(doc){
                     return (doc.value === doctorCode);
@@ -123,7 +123,7 @@ restService.post('/hook', function (req, res) {
                 
                 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
-                console.log(speech);*/
+                console.log(speech);
                 
             }
         }
