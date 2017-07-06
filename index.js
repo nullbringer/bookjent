@@ -123,12 +123,12 @@ restService.post('/hook', function (req, res) {
                 
                 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
-                console.log(speech);
+                //console.log(speech);
                 
             }
         }
 
-        //console.log('result: ', speech);
+        console.log('context ', requestBody.result.contexts);
 
         return res.json({
             speech: speech,
