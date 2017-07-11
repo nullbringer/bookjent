@@ -107,7 +107,7 @@ restService.post('/hook', function (req, res) {
                 var selectedDoctorList = doctors.filter(function(doc){
                     return (doc.value === doctorCode);
                 });
-				if ( Object.keys(selectedDoctor).length > 0)
+				if ( Object.keys(selectedDoctorList).length > 0)
 				{
 					selectedDoctor = selectedDoctorList[0];
 					var departmentOfDoctorCode = selectedDoctor.department;
