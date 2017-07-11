@@ -79,19 +79,6 @@ restService.post('/hook', function (req, res) {
                     user_entities_request.on('response', function(response) {
                         console.log('User entities response: ');
                         console.log(JSON.stringify(response, null, 4));
-
-                        /*var request = app.textRequest('book appintment with Daisy', {sessionId: sessionId});
-
-                        request.on('response', function(response) {
-                            console.log('Query response: ');
-                            console.log(JSON.stringify(response, null, 4));
-                        });
-
-                        request.on('error', function(error) {
-                            console.log(error);
-                        });
-
-                        request.end();*/
                         
                         
                     });
@@ -119,10 +106,24 @@ restService.post('/hook', function (req, res) {
                 
                 var selectedDoctor = doctors.filter(function(doc){
                     return (doc.value === doctorCode);
-                })[0]; 
-                
-                
+                })[0];
+				
+                function getDepartmentByDoctorCode(department) {
+					return data.filter(
+					function(data){ return data.department == department }
+						);
+				}
+
+				var departmentOfDoctorCode = getCountryByCode(doctorCode);
+				
+				if(requestBody.result.contexts.department === departmentOfDoctorCode)
+                {
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+				}
+				else
+				{
+				 speech = 'Please choose a valid doctor from the above list of doctors';				 
+				}
                 console.log(speech);
                 
             }
