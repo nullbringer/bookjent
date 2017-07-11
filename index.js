@@ -109,7 +109,7 @@ restService.post('/hook', function (req, res) {
                 });
 				if ( Object.keys(selectedDoctorList).length > 0)
 				{
-					selectedDoctor = selectedDoctorList[0];
+					var selectedDoctor = selectedDoctorList[0];
 					var departmentOfDoctorCode = selectedDoctor.department;
 				}
 				
