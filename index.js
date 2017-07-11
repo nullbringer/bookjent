@@ -115,13 +115,11 @@ restService.post('/hook', function (req, res) {
 					var departmentOfDoctorCode = selectedDoctor.department;
 					
 					console.log(requestBody.contexts[0].parameters.department + 'departmentOfDoctorCode' + departmentOfDoctorCode);
-					if(requestBody.result.contexts.department === departmentOfDoctorCode)
-					{
-					speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
-					}
-					else
-					{
-					speech = 'Please choose a valid doctor from the above list of doctors';				 
+					
+					if (requestBody.result.contexts[0].department === departmentOfDoctorCode) {
+						speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+					} else {
+						speech = 'Please choose a valid doctor from the above list of doctors';				 
 					}
 					console.log(speech);
 				}
