@@ -62,7 +62,7 @@ restService.post('/hook', function (req, res) {
                     
                     /* Update dept-doctors entity */
                     
-                    var user_entities = [{
+                    /* var user_entities = [{
                         name: 'dept-doctors',
                         extend: false,
                         entries: doctorForDept
@@ -88,7 +88,7 @@ restService.post('/hook', function (req, res) {
                         throw "Could not update dept-doctor Entries!";
                     });
 
-                    user_entities_request.end();
+                    user_entities_request.end(); */
                     
                     
                     
@@ -104,17 +104,14 @@ restService.post('/hook', function (req, res) {
                 
                 var doctorCode = requestBody.result.parameters['dept-doctors'];
                 
-                var selectedDoctor = doctors.filter(function(doc){
+                var selectedDoctorList = doctors.filter(function(doc){
                     return (doc.value === doctorCode);
-                })[0];
-				
-                function getDepartmentByDoctorCode(department) {
-					return data.filter(
-					function(data){ return data.department == department }
-						);
+                });
+				if ( Object.keys(selectedDoctor).length > 0)
+				{
+					selectedDoctor = selectedDoctorList[0];
+					var departmentOfDoctorCode = selectedDoctor.department;
 				}
-
-				var departmentOfDoctorCode = getCountryByCode(doctorCode);
 				
 				if(requestBody.result.contexts.department === departmentOfDoctorCode)
                 {
