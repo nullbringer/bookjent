@@ -99,7 +99,8 @@ restService.post('/hook', function (req, res) {
                 
                   
                 
-            } else if (requestBody.result.action === 'choose.doctor') {
+            } else if (requestBody.result.action === 'choose.doctor') 
+			{
                
                 
                 var doctorCode = requestBody.result.parameters['dept-doctors'];
@@ -110,19 +111,22 @@ restService.post('/hook', function (req, res) {
 				if ( Object.keys(selectedDoctorList).length > 0)
 				{
 					var selectedDoctor = selectedDoctorList[0];
+					console.log(selectedDoctor);
 					var departmentOfDoctorCode = selectedDoctor.department;
+					
+					console.log(requestBody.result.contexts.department + 'departmentOfDoctorCode' + departmentOfDoctorCode);
+					if(requestBody.result.contexts.department === departmentOfDoctorCode)
+					{
+					speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+					}
+					else
+					{
+					speech = 'Please choose a valid doctor from the above list of doctors';				 
+					}
+					console.log(speech);
 				}
 				
-				console.log(requestBody.result.contexts.department + 'departmentOfDoctorCode' + departmentOfDoctorCode);
-				if(requestBody.result.contexts.department === departmentOfDoctorCode)
-                {
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
-				}
-				else
-				{
-				 speech = 'Please choose a valid doctor from the above list of doctors';				 
-				}
-                console.log(speech);
+				
                 
             }
         }
