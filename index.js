@@ -72,12 +72,17 @@ restService.post('/hook', function (req, res) {
                     
                     /*  choosing doctor from selected department */
                 
-                    var doctorCode = requestBody.result.parameters['dept-doctors'];
-
-                    var preselectedDeptCode = requestBody.result.contexts[0].parameters.department;
+                    var doctorCode = requestBody.result.parameters['dept-doctors'];                    
+                    
+                    var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
+                        return context.name === 'getdoctorsbydepartment-followup';
+                    })[0];
+                    
+                    
+                    var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
 
                     var departmentWiseDoctorList = doctors.filter( function(doc) {
-                        return doc.department==preselectedDeptCode
+                        return doc.department == preselectedDeptValue;
                     });
 
                     var docTitles = [];	
