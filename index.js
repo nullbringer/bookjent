@@ -80,16 +80,36 @@ restService.post('/hook', function (req, res) {
                     })[0];
                     
                     
-                    console.log(preselectedDepartmentContext);
+                    //console.log(preselectedDepartmentContext);
                     
-                    returnContext = [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}];
-                            
+                    var selectedDate = preselectedDepartmentContext.date || preselectedDepartmentContext.deptDate;
+                    var selectedTime = preselectedDepartmentContext.time || preselectedDepartmentContext.deptTime;
                     
-                    
-                    
-                    
-                    
-                    
+                    if(selectedDate && selectedDate){
+                        
+                        returnContext = [{
+                            "name":"has-date-time", 
+                            "lifespan":2, 
+                            "parameters":{}
+                        }];
+                        
+                    } else if(selectedDate) {
+                        
+                        returnContext = [{
+                            "name":"has-date", 
+                            "lifespan":2, 
+                            "parameters":{}
+                        }];
+                        
+                    } else if(selectedDate) {
+                        
+                        returnContext = [{
+                            "name":"has-time", 
+                            "lifespan":2, 
+                            "parameters":{}
+                        }];
+                        
+                    } 
                     
                     
                     var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
