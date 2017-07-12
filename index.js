@@ -9,10 +9,10 @@ const departments = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'))
 const doctors = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
 
 
-var apiai = require("./module/apiai");
+//var apiai = require("./module/apiai");
 
 
-var app = apiai(settings.accessToken);
+//var app = apiai(settings.accessToken);
 
 
 const restService = express();
@@ -25,6 +25,7 @@ restService.post('/hook', function (req, res) {
 
     try {
         var speech = 'empty speech';
+        var returnContext = '';
         
 
         if (req.body) {
@@ -79,10 +80,22 @@ restService.post('/hook', function (req, res) {
                     })[0];
                     
                     
+                    console.log(preselectedDepartmentContext);
+                    
+                    returnContext = [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}];
+                            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
 
                     var departmentWiseDoctorList = doctors.filter( function(doc) {
-                        return doc.department == preselectedDeptValue;
+                        return doc.department === preselectedDeptValue;
                     });
 
                     var docTitles = [];	
@@ -122,14 +135,15 @@ restService.post('/hook', function (req, res) {
                     
                     break;
                 
-            }
+            }   //end of switch
         }
 
-        console.log('context ', requestBody.result.contexts);
+        //console.log('context ', requestBody.result.contexts);
 
         return res.json({
             speech: speech,
             displayText: speech,
+            contextOut:returnContext,
             source: 'bookjent'
         });
     } catch (err) {
