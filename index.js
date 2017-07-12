@@ -143,6 +143,9 @@ restService.post('/hook', function (req, res) {
                                 
                                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
                                 
+                            } else {
+                                
+                                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
                             }
                                                     
                             
