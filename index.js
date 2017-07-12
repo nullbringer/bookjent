@@ -9,10 +9,10 @@ const departments = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'))
 const doctors = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
 
 
-var apiai = require("./module/apiai");
+//var apiai = require("./module/apiai");
 
 
-var app = apiai(settings.accessToken);
+//var app = apiai(settings.accessToken);
 
 
 const restService = express();
@@ -25,6 +25,7 @@ restService.post('/hook', function (req, res) {
 
     try {
         var speech = 'empty speech';
+        var returnContext = [];
         
 
         if (req.body) {
@@ -71,18 +72,22 @@ restService.post('/hook', function (req, res) {
                 case 'choose.doctor':
                     
                     /*  choosing doctor from selected department */
-                
-                    var doctorCode = requestBody.result.parameters['dept-doctors'];                    
+                    
+                    
+                    console.log('fired choose.doctor');
                     
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
                     
+                
+                    var doctorCode = preselectedDepartmentContext.parameters['dept-doctors'];
+                                      
                     
                     var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
 
                     var departmentWiseDoctorList = doctors.filter( function(doc) {
-                        return doc.department == preselectedDeptValue;
+                        return doc.department === preselectedDeptValue;
                     });
 
                     var docTitles = [];	
@@ -95,9 +100,62 @@ restService.post('/hook', function (req, res) {
                         var selectedDoctor = selectedDoctorList[0];
                         var departmentOfDoctorCode = selectedDoctor.department;
 
+                        
+                        console.log(departmentOfDoctorCode);
+                        console.log(preselectedDepartmentContext.parameters.department);
 
-                        if (departmentOfDoctorCode === requestBody.result.contexts[0].parameters.department) {
-                            speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                        if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
+                            
+                            
+                            var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+                            var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+
+
+                            if(selectedDate && selectedTime){
+
+                                returnContext = [{
+                                    "name":"has-date-time", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';
+                                
+                                
+
+                            } else if(selectedDate) {
+
+                                returnContext = [{
+                                    "name":"has-date", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
+
+                            } else if(selectedTime) {
+
+                                returnContext = [{
+                                    "name":"has-time", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+                                
+                            } else {
+                                
+                                returnContext = [{
+                                    "name":"has-nothing", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                            }
+                                                    
+                            
+                            
                             
                         }  else {
                             speech = 'Please choose from following list of doctors: ';
@@ -122,14 +180,15 @@ restService.post('/hook', function (req, res) {
                     
                     break;
                 
-            }
+            }   //end of switch
         }
 
-        console.log('context ', requestBody.result.contexts);
+        //console.log('context ', requestBody.result.contexts);
 
         return res.json({
             speech: speech,
             displayText: speech,
+            contextOut:returnContext,
             source: 'bookjent'
         });
     } catch (err) {
