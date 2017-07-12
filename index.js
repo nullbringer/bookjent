@@ -125,9 +125,9 @@ restService.post('/hook', function (req, res) {
                                     "parameters":{}
                                 }];
                                 
-                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
 
-                            } else if(selectedDate) {
+                            } else if(selectedTime) {
 
                                 returnContext = [{
                                     "name":"has-time", 
@@ -135,8 +135,8 @@ restService.post('/hook', function (req, res) {
                                     "parameters":{}
                                 }];
                                 
-                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
-
+                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+                                
                             }
                                                     
                             
