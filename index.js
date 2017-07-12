@@ -85,9 +85,8 @@ restService.post('/hook', function (req, res) {
                     var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
                     var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
                     
-                    console.log(selectedDate);
                     
-                    if(selectedDate && selectedDate){
+                    if(selectedDate && selectedTime){
                         
                         returnContext = [{
                             "name":"has-date-time", 
