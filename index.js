@@ -145,6 +145,12 @@ restService.post('/hook', function (req, res) {
                                 
                             } else {
                                 
+                                returnContext = [{
+                                    "name":"has-nothing", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
                                  speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
                             }
                                                     
