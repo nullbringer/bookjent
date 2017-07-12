@@ -72,13 +72,16 @@ restService.post('/hook', function (req, res) {
                 case 'choose.doctor':
                     
                     /*  choosing doctor from selected department */
-                
-                    var doctorCode = requestBody.result.parameters['dept-doctors'];                    
+                    
+                    
+                    console.log('fired choose.doctor');
                     
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
                     
+                
+                    var doctorCode = preselectedDepartmentContext.parameters['dept-doctors'];
                                       
                     
                     var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
@@ -97,8 +100,11 @@ restService.post('/hook', function (req, res) {
                         var selectedDoctor = selectedDoctorList[0];
                         var departmentOfDoctorCode = selectedDoctor.department;
 
+                        
+                        console.log(departmentOfDoctorCode);
+                        console.log(preselectedDepartmentContext.parameters.department);
 
-                        if (departmentOfDoctorCode === requestBody.result.contexts[0].parameters.department) {
+                        if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
                             
                             
                             var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
