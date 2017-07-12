@@ -56,53 +56,7 @@ restService.post('/hook', function (req, res) {
                     
                     speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
                     
-                    /*
-                    * SHOULD WE MAKE it asynchronous???
-                    */
-                    
-                    /* Update dept-doctors entity */
-                    
-                    var user_entities = [{
-                        name: 'dept-doctors',
-                        extend: false,
-                        entries: doctorForDept
-                    }];
-                    
-
-                    var user_entities_body = {
-                        sessionId: sessionId,
-                        entities: user_entities
-                    };
-                    
-                    var user_entities_request = app.userEntitiesRequest(user_entities_body);
-                    
-                    user_entities_request.on('response', function(response) {
-                        console.log('User entities response: ');
-                        console.log(JSON.stringify(response, null, 4));
-
-                        /*var request = app.textRequest('book appintment with Daisy', {sessionId: sessionId});
-
-                        request.on('response', function(response) {
-                            console.log('Query response: ');
-                            console.log(JSON.stringify(response, null, 4));
-                        });
-
-                        request.on('error', function(error) {
-                            console.log(error);
-                        });
-
-                        request.end();*/
-                        
-                        
-                    });
-
-                    user_entities_request.on('error', function(error) {
-                        console.log(error);
-                        throw "Could not update dept-doctor Entries!";
-                    });
-
-                    user_entities_request.end();
-                    
+    
                     
                     
                     
@@ -116,14 +70,45 @@ restService.post('/hook', function (req, res) {
                
                 
                 var doctorCode = requestBody.result.parameters['dept-doctors'];
-                
-                var selectedDoctor = doctors.filter(function(doc){
+
+				var varDept = requestBody.result.contexts[0].parameters.department;
+			
+				var departmentWiseDoctorList = doctors.filter(function(x){return x.department==varDept});
+				
+				var docTitles = [];	
+			
+                var selectedDoctorList = doctors.filter(function(doc){
                     return (doc.value === doctorCode);
-                })[0]; 
-                
-                
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
-                //console.log(speech);
+                });
+				
+				if ( Object.keys(selectedDoctorList).length > 0) {
+					var selectedDoctor = selectedDoctorList[0];
+					var departmentOfDoctorCode = selectedDoctor.department;
+					
+					
+					if (departmentOfDoctorCode === requestBody.result.contexts[0].parameters.department) {
+						speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+					}  else {
+						speech = 'Please choose from following list of doctors';
+						
+						for (var doc of departmentWiseDoctorList) {
+							docTitles.push[doc.title];
+							speech += ' '+ doc.title + ',';
+						}
+						
+						
+					}
+										 
+				} else {
+					speech = 'Please choose from following list of doctors:';
+					
+					for (var doc of departmentWiseDoctorList) {
+						docTitles.push[doc.title];
+						speech += ' '+ doc.title + ',';
+					}
+						
+				}
+				
                 
             }
         }
