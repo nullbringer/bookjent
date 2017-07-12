@@ -79,39 +79,7 @@ restService.post('/hook', function (req, res) {
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
                     
-                    
-                    //console.log(preselectedDepartmentContext);
-                    
-                    var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-                    var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
-                    
-                    
-                    if(selectedDate && selectedTime){
-                        
-                        returnContext = [{
-                            "name":"has-date-time", 
-                            "lifespan":2, 
-                            "parameters":{}
-                        }];
-                        
-                    } else if(selectedDate) {
-                        
-                        returnContext = [{
-                            "name":"has-date", 
-                            "lifespan":2, 
-                            "parameters":{}
-                        }];
-                        
-                    } else if(selectedDate) {
-                        
-                        returnContext = [{
-                            "name":"has-time", 
-                            "lifespan":2, 
-                            "parameters":{}
-                        }];
-                        
-                    } 
-                    
+                                      
                     
                     var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
 
@@ -131,7 +99,48 @@ restService.post('/hook', function (req, res) {
 
 
                         if (departmentOfDoctorCode === requestBody.result.contexts[0].parameters.department) {
-                            speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                            
+                            
+                            var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+                            var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+
+
+                            if(selectedDate && selectedTime){
+
+                                returnContext = [{
+                                    "name":"has-date-time", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';
+                                
+                                
+
+                            } else if(selectedDate) {
+
+                                returnContext = [{
+                                    "name":"has-date", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+
+                            } else if(selectedDate) {
+
+                                returnContext = [{
+                                    "name":"has-time", 
+                                    "lifespan":2, 
+                                    "parameters":{}
+                                }];
+                                
+                                speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
+
+                            }
+                                                    
+                            
+                            
                             
                         }  else {
                             speech = 'Please choose from following list of doctors: ';
