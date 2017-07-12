@@ -82,8 +82,10 @@ restService.post('/hook', function (req, res) {
                     
                     //console.log(preselectedDepartmentContext);
                     
-                    var selectedDate = preselectedDepartmentContext.date || preselectedDepartmentContext.deptDate;
-                    var selectedTime = preselectedDepartmentContext.time || preselectedDepartmentContext.deptTime;
+                    var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+                    var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+                    
+                    console.log(selectedDate);
                     
                     if(selectedDate && selectedDate){
                         
