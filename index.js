@@ -32,83 +32,90 @@ restService.post('/hook', function (req, res) {
             
             var sessionId = requestBody.sessionId;
 
-            /*  searching doctors by department */
             
-            if (requestBody.result.action === 'search.doctorsByDepartment') {
-                speech = '';                
+            
+            
+            switch(requestBody.result.action){
+                    
+                case 'search.doctorsByDepartment':
+                    
+                    /*  searching doctors by department */            
+            
+                    speech = '';                
 
-                var requestedDepartment = departments.filter(function(dept){
-                    return (dept.value === requestBody.result.parameters.department);
-                });
-                
-                                
-                var doctorForDept = doctors.filter(function(doc){
-                    return (doc.department === requestBody.result.parameters.department);
-                });   
-                
-                var doctorNames = [];
-                doctorForDept.forEach(function(doc){
-                    doctorNames.push(doc.title);
-                    
-                });             
-                
-                if(doctorNames){
-                    
-                    speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
-                    
-    
-                    
-                    
-                    
-                } else {
-                    speech = 'No doctors are available for ' + requestedDepartment[0].title;
-                }          
-                
-                  
-                
-            } else if (requestBody.result.action === 'choose.doctor') {
-               
-                
-                var doctorCode = requestBody.result.parameters['dept-doctors'];
+                    var requestedDepartment = departments.filter(function(dept){
+                        return (dept.value === requestBody.result.parameters.department);
+                    });
 
-				var varDept = requestBody.result.contexts[0].parameters.department;
-			
-				var departmentWiseDoctorList = doctors.filter(function(x){return x.department==varDept});
-				
-				var docTitles = [];	
-			
-                var selectedDoctorList = doctors.filter(function(doc){
-                    return (doc.value === doctorCode);
-                });
-				
-				if ( Object.keys(selectedDoctorList).length > 0) {
-					var selectedDoctor = selectedDoctorList[0];
-					var departmentOfDoctorCode = selectedDoctor.department;
-					
-					
-					if (departmentOfDoctorCode === requestBody.result.contexts[0].parameters.department) {
-						speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
-					}  else {
-						speech = 'Please choose from following list of doctors';
-						
-						for (var doc of departmentWiseDoctorList) {
-							docTitles.push[doc.title];
-							speech += ' '+ doc.title + ',';
-						}
-						
-						
-					}
-										 
-				} else {
-					speech = 'Please choose from following list of doctors:';
-					
-					for (var doc of departmentWiseDoctorList) {
-						docTitles.push[doc.title];
-						speech += ' '+ doc.title + ',';
-					}
-						
-				}
-				
+
+                    var doctorForDept = doctors.filter(function(doc){
+                        return (doc.department === requestBody.result.parameters.department);
+                    });   
+
+                    var doctorNames = [];
+                    doctorForDept.forEach(function(doc){
+                        doctorNames.push(doc.title);
+
+                    });             
+
+                    if(doctorNames){
+
+                        speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
+
+                    } else {
+                        speech = 'No doctors are available for ' + requestedDepartment[0].title;
+                    }  
+                    
+                    break;
+                    
+                case 'choose.doctor':
+                    
+                    /*  choosing doctor from selected department */
+                
+                    var doctorCode = requestBody.result.parameters['dept-doctors'];
+
+                    var preselectedDeptCode = requestBody.result.contexts[0].parameters.department;
+
+                    var departmentWiseDoctorList = doctors.filter( function(doc) {
+                        return doc.department==preselectedDeptCode
+                    });
+
+                    var docTitles = [];	
+
+                    var selectedDoctorList = doctors.filter( function(doc) {
+                        return (doc.value === doctorCode);
+                    });
+
+                    if ( Object.keys(selectedDoctorList).length > 0) {
+                        var selectedDoctor = selectedDoctorList[0];
+                        var departmentOfDoctorCode = selectedDoctor.department;
+
+
+                        if (departmentOfDoctorCode === requestBody.result.contexts[0].parameters.department) {
+                            speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                            
+                        }  else {
+                            speech = 'Please choose from following list of doctors: ';
+
+                            for (var doc of departmentWiseDoctorList) {
+                                docTitles.push[doc.title];
+                                speech += ' '+ doc.title + ',';
+                            }
+
+
+                        }
+
+                    } else {
+                        speech = 'Please choose from following list of doctors:';
+
+                        for (var doc of departmentWiseDoctorList) {
+                            docTitles.push[doc.title];
+                            speech += ' '+ doc.title + ',';
+                        }
+
+                    }
+                    
+                    break;
                 
             }
         }
