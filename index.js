@@ -40,7 +40,9 @@ restService.post('/hook', function (req, res) {
                     
                 case 'search.doctorsByDepartment':
                     
-                    /*  searching doctors by department */            
+                    /*  searching doctors by department */
+                    
+                    console.log('search.doctorsByDepartment');
             
                     speech = '';                
 
@@ -183,7 +185,12 @@ restService.post('/hook', function (req, res) {
             }   //end of switch
         }
 
-        //console.log('context ', requestBody.result.contexts);
+        console.log('Speech');
+        console.log('==================');
+        console.log(speech);
+        console.log('Context');
+        console.log('==================');
+        console.log(returnContext);
 
         return res.json({
             speech: speech,
