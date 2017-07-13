@@ -1,3 +1,4 @@
 {
-  "accessToken": "9fd89dbb6f69469ead178174f3da7d2f"
+  "accessToken": "9fd89dbb6f69469ead178174f3da7d2f",
+   "mongoURI":"mongodb://bookjent_master:qwerty12345@ds157282.mlab.com:57282/bookjent_db"
 }

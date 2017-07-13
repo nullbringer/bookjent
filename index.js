@@ -3,23 +3,48 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const mongodb = require("mongodb");
 
 const settings = JSON.parse(fs.readFileSync('data/settings.json', 'utf8'));
 const departments = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'));
 const doctors = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
+var ObjectID = mongodb.ObjectID;
 
 
 //var apiai = require("./module/apiai");
-
-
 //var app = apiai(settings.accessToken);
 
+const app = express();
 
-const restService = express();
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json());
 
-restService.use(bodyParser.json());
 
-restService.post('/hook', function (req, res) {
+var db;
+
+// Connect to the database before starting the application server. 
+mongodb.MongoClient.connect(settings.mongoURI, function (err, database) {
+    if (err) {
+        console.log(err);
+        process.exit(1);
+    }
+
+    // Save database object from the callback for reuse.
+    db = database;
+    console.log("Database connection ready");
+
+    // Initialize the app.
+
+    app.listen((process.env.PORT || 5000), function () {
+        console.log("Server listening");
+    });
+
+
+});
+
+
+
+app.post('/hook', function (req, res) {
 
     console.log('HOOK REQUEST');
     console.log('++++++++++++++');
@@ -210,6 +235,3 @@ restService.post('/hook', function (req, res) {
     }
 });
 
-restService.listen((process.env.PORT || 5000), function () {
-    console.log("Server listening");
-});
