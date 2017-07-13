@@ -302,6 +302,14 @@ function insertMeeting(preselectedDepartmentContext, res){
 
 function callback(res,speech,returnContext){
     
+    console.log('Speech');
+    console.log('==================');
+    console.log(speech);
+    console.log('Context');
+    console.log('==================');
+    console.log(returnContext);
+    
+    
     return res.json({
         speech: speech,
         displayText: speech,
