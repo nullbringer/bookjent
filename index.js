@@ -21,7 +21,8 @@ restService.use(bodyParser.json());
 
 restService.post('/hook', function (req, res) {
 
-    //console.log('hook request');
+    console.log('HOOK REQUEST');
+    console.log('++++++++++++++');
 
     try {
         var speech = 'empty speech';
@@ -42,9 +43,10 @@ restService.post('/hook', function (req, res) {
                     
                     /*  searching doctors by department */
                     
-                    console.log('search.doctorsByDepartment');
+                    console.log('Fired: search.doctorsByDepartment');
             
-                    speech = '';                
+                    speech = '';    
+                    returnContext = [];
 
                     var requestedDepartment = departments.filter(function(dept){
                         return (dept.value === requestBody.result.parameters.department);
@@ -76,7 +78,9 @@ restService.post('/hook', function (req, res) {
                     /*  choosing doctor from selected department */
                     
                     
-                    console.log('fired choose.doctor');
+                    console.log('Fired: choose.doctor');
+                    speech = '';    
+                    returnContext = [];
                     
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
@@ -101,10 +105,6 @@ restService.post('/hook', function (req, res) {
                     if ( Object.keys(selectedDoctorList).length > 0) {
                         var selectedDoctor = selectedDoctorList[0];
                         var departmentOfDoctorCode = selectedDoctor.department;
-
-                        
-                        console.log(departmentOfDoctorCode);
-                        console.log(preselectedDepartmentContext.parameters.department);
 
                         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
                             
