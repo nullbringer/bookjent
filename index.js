@@ -208,22 +208,36 @@ app.post('/getDoctors', function (req, res) {
 app.post('/getMeetingForDoctor', function (req, res) {
     
     try{
+       
+        var query = {"doctor_name": req.body.name};
         
-        console.log(req.body.name);
-        
-
-        
-          db.collection(MEETING_COLLECTION).find({}, function(err, meetings) {
+          db.collection(MEETING_COLLECTION).find(query).toArray(function(err, meetings) {
             if (err) {
               handleError(res, err.message, "Failed to get contact");
             } else {
+                
+                
+                var meetingList = [];
+                
+                meetings.forEach(function(meet){
+                    
+                var meeting = {
+                    title :"Appintment",
+                    start: meet.start_date_time,
+                    end: meet.end_date_time
+                }
+
+                    meetingList.push(meeting);
+
+                });
+                                
               
                  return res.json({
                     status: {
                         code: 200,
                         type: 'success'
                     },
-                    data: meetings
+                    data: meetingList
                 });
                 
                 
