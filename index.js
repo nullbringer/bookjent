@@ -158,13 +158,81 @@ app.post('/getDoctors', function (req, res) {
     
     try{
         
+        
+        
+        var payload ={};
+        
+        doctors.forEach(function(doc){         
+             
+            
+            var docObj ={
+                'value':doc.value,
+                'name':doc.title
+            }
+            
+            payload[doc.department] = payload[doc.department]||[];            
+            payload[doc.department].push(docObj);
+            
+            
+        });  
+
+        
          return res.json({
             status: {
                 code: 200,
                 type: 'success'
             },
-            data: doctors
+            data: payload
         });
+        
+        
+    } catch(err) {
+        
+        console.error("Can't process request", err);
+
+        return res.status(400).json({
+            status: {
+                code: 400,
+                errorType: err.message
+            }
+        });
+        
+    }
+    
+    
+    
+});
+
+
+
+app.post('/getMeetingForDoctor', function (req, res) {
+    
+    try{
+        
+        console.log(req.body.name);
+        
+
+        
+          db.collection(MEETING_COLLECTION).find({}, function(err, meetings) {
+            if (err) {
+              handleError(res, err.message, "Failed to get contact");
+            } else {
+              
+                 return res.json({
+                    status: {
+                        code: 200,
+                        type: 'success'
+                    },
+                    data: meetings
+                });
+                
+                
+            }
+          });
+
+
+        
+        
         
         
     } catch(err) {
