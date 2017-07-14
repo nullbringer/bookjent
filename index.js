@@ -153,6 +153,45 @@ app.post('/hook', function (req, res) {
 });
 
 
+
+app.post('/getDoctors', function (req, res) {
+    
+    try{
+        
+         return res.json({
+            status: {
+                code: 200,
+                type: 'success'
+            },
+            data: doctors
+        });
+        
+        
+    } catch(err) {
+        
+        console.error("Can't process request", err);
+
+        return res.status(400).json({
+            status: {
+                code: 400,
+                errorType: err.message
+            }
+        });
+        
+    }
+    
+    
+    
+});
+
+
+
+
+
+
+
+
+
 function chooseDoctor(preselectedDepartmentContext, res){
     
     var speech = '';
