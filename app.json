@@ -1,6 +1,6 @@
 {
   "name": "Bookjent Webhook",
-  "description": "Webhook implementation of a booking chatbot",
+  "description": "Webhook implementation for a pseudo-intelligent booking assistant. Powered by Api.ai.",
   "repository": "https://github.com/urbangeek/bookjent",
   "logo": "http://xvir.github.io/img/apiai.png",
   "keywords": ["api.ai", "natural language"]
