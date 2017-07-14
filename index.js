@@ -153,6 +153,127 @@ app.post('/hook', function (req, res) {
 });
 
 
+
+app.post('/getDoctors', function (req, res) {
+    
+    try{
+        
+        
+        
+        var payload ={};
+        
+        doctors.forEach(function(doc){         
+             
+            
+            var docObj ={
+                'value':doc.value,
+                'name':doc.title
+            }
+            
+            payload[doc.department] = payload[doc.department]||[];            
+            payload[doc.department].push(docObj);
+            
+            
+        });  
+
+        
+         return res.json({
+            status: {
+                code: 200,
+                type: 'success'
+            },
+            data: payload
+        });
+        
+        
+    } catch(err) {
+        
+        console.error("Can't process request", err);
+
+        return res.status(400).json({
+            status: {
+                code: 400,
+                errorType: err.message
+            }
+        });
+        
+    }
+    
+    
+    
+});
+
+
+
+app.post('/getMeetingForDoctor', function (req, res) {
+    
+    try{
+       
+        var query = {"doctor_name": req.body.name};
+        
+          db.collection(MEETING_COLLECTION).find(query).toArray(function(err, meetings) {
+            if (err) {
+              handleError(res, err.message, "Failed to get contact");
+            } else {
+                
+                
+                var meetingList = [];
+                
+                meetings.forEach(function(meet){
+                    
+                var meeting = {
+                    title :"Appintment",
+                    start: meet.start_date_time,
+                    end: meet.end_date_time
+                }
+
+                    meetingList.push(meeting);
+
+                });
+                                
+              
+                 return res.json({
+                    status: {
+                        code: 200,
+                        type: 'success'
+                    },
+                    data: meetingList
+                });
+                
+                
+            }
+          });
+
+
+        
+        
+        
+        
+    } catch(err) {
+        
+        console.error("Can't process request", err);
+
+        return res.status(400).json({
+            status: {
+                code: 400,
+                errorType: err.message
+            }
+        });
+        
+    }
+    
+    
+    
+});
+
+
+
+
+
+
+
+
+
 function chooseDoctor(preselectedDepartmentContext, res){
     
     var speech = '';

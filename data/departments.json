@@ -4,7 +4,7 @@
     "title": "Cardiology",
     "synonyms": [
       "Cardiology",
-        "Cardiologist",
+      "Cardiologist",
       "cardio",
       "chest pain",
       "heart"
@@ -18,7 +18,8 @@
       "Gynaecologist",
       "woman",
       "women",
-      "pregnant"
+      "pregnant",
+      "Gyni"
     ]
   },
   {
@@ -26,10 +27,13 @@
     "title": "Paediatrics",
     "synonyms": [
       "Paediatrics",
+      "Paediatric",
       "kid",
       "kids",
       "child",
-      "children"
+      "children",
+      "Pediatrics",
+      "Pediatric"
     ]
   },
   {
@@ -37,7 +41,12 @@
     "title": "Orthopaedics",
     "synonyms": [
       "Orthopaedics",
-      "bone"
+      "Orthopaedic",
+      "bone",
+      "Orthopaedist",
+      "orthopedist",
+      "orthopedist",
+      "Ortho"
     ]
   },
   {
@@ -45,7 +54,9 @@
     "title": "Neurology",
     "synonyms": [
       "Neurology",
-      "brain"
+      "brain",
+      "brains",
+      "head"
     ]
   },
   {
