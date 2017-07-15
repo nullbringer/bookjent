@@ -318,33 +318,32 @@ function chooseDoctor(preselectedDepartmentContext, res){
 		var meetingStartDateTimeISO = meetingStartDateTime.toISOString(); 
 								
 					
-		var condition =    
-						{
-							"start_date_time": {
-								"$lte": 
-									 new Date(meetingStartDateTimeISO)	
-							} , 
-							  "end_date_time": {
-								"$gte": 
-									 new Date(meetingStartDateTimeISO)
-							} ,   
-							"doctor_name": doctorCode
-						};
-			
+		var condition = {
+					"start_date_time": {
+						"$lte": 
+							 new Date(meetingStartDateTimeISO)	
+					} , 
+					  "end_date_time": {
+						"$gte": 
+							 new Date(meetingStartDateTimeISO)
+					} ,   
+					"doctor_name": doctorCode
+				};
+
 
 		
 		db.collection('meeting_default').find(condition).count().then(function(numOfConfictMeetings) {
-						  console.log('numOfConfictMeetings:'+numOfConfictMeetings);
-						  if(numOfConfictMeetings === 0) {
-							speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';				
-							callback(res,speech,returnContext);
-							
-						  }
-						  else {
-							 speech = selectedDoctor.title + ' already booked on ' + selectedDate + ' at ' + selectedTime + ' Please choose a different time'; 
-							 callback(res,speech,returnContext);
-							   
-						  }
+		  console.log('numOfConfictMeetings:'+numOfConfictMeetings);
+		  if(numOfConfictMeetings === 0) {
+			speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';				
+			callback(res,speech,returnContext);
+
+		  }
+		  else {
+			 speech = selectedDoctor.title + ' already booked on ' + selectedDate + ' at ' + selectedTime + ' Please choose a different time'; 
+			 callback(res,speech,returnContext);
+
+		  }
 		}); 
 				
 
