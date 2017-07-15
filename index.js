@@ -337,12 +337,10 @@ function chooseDoctor(preselectedDepartmentContext, res){
 		  if(numOfConfictMeetings === 0) {
 			speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';				
 			callback(res,speech,returnContext);
-
 		  }
 		  else {
 			 speech = selectedDoctor.title + ' already booked on ' + selectedDate + ' at ' + selectedTime + ' Please choose a different time'; 
 			 callback(res,speech,returnContext);
-
 		  }
 		}); 
 				
