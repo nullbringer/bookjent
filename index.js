@@ -297,28 +297,59 @@ function chooseDoctor(preselectedDepartmentContext, res){
     if ( Object.keys(selectedDoctorList).length > 0) {
         var selectedDoctor = selectedDoctorList[0];
         var departmentOfDoctorCode = selectedDoctor.department;
-
+        
         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
 
-
+            
             var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
             var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
 
 
             if(selectedDate && selectedTime){
-
+				
+				
                 returnContext = [{
                     "name":"has-date-time", 
                     "lifespan":2, 
                     "parameters":{}
                 }];
+				
+				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);
+				var meetingStartDateTimeISO = meetingStartDateTime.toISOString(); 
+				                        
+							
+				var condition =    
+								{
+									"start_date_time": {
+										"$lte": 
+											 new Date(meetingStartDateTimeISO)	
+									} , 
+									  "end_date_time": {
+										"$gte": 
+											 new Date(meetingStartDateTimeISO)
+									} ,   
+									"doctor_name": doctorCode
+								};
+					
 
-                speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';
-
+				
+				db.collection('meeting_default').find(condition).count().then(function(numOfConfictMeetings) {
+                                  console.log('numOfConfictMeetings:'+numOfConfictMeetings);
+								  if(numOfConfictMeetings === 0) {
+									speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';				
+									callback(res,speech,returnContext);
+									
+								  }
+								  else {
+									 speech = selectedDoctor.title + ' already booked on ' + selectedDate + ' at ' + selectedTime + ' Please choose a different time'; 
+									 callback(res,speech,returnContext);
+									   
+								  }
+				}); 
+				
 
 
             } else if(selectedDate) {
-
                 returnContext = [{
                     "name":"has-date", 
                     "lifespan":2, 
@@ -328,7 +359,6 @@ function chooseDoctor(preselectedDepartmentContext, res){
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
 
             } else if(selectedTime) {
-
                 returnContext = [{
                     "name":"has-time", 
                     "lifespan":2, 
@@ -338,7 +368,6 @@ function chooseDoctor(preselectedDepartmentContext, res){
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
 
             } else {
-
                 returnContext = [{
                     "name":"has-nothing", 
                     "lifespan":2, 
