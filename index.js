@@ -318,7 +318,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 			
 			if( moment(meetingStartDateTimeISO).isAfter(new Date())) {
 			
-			if( startDate.getDay() === 6 || startDate.getDay() === 0 ) {
+			if( startDate.getDay() !== 6 || startDate.getDay() !== 0 ) {
 			
 			
 			
