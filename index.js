@@ -314,11 +314,12 @@ function chooseDoctor(preselectedDepartmentContext, res){
 			var meetingStartDateTimeISO = meetingStartDateTime.toISOString(); 
 			console.log(meetingStartDateTime);
 								
+		
 			var startDate = new Date(selectedDate);
 			
 			if( moment(meetingStartDateTimeISO).isAfter(new Date())) {
 			
-			if( startDate.getDay() !== 6 || startDate.getDay() !== 0 ) {
+			if( startDate.getDay() !== 6 && startDate.getDay() !== 0 ) {
 			
 			
 			
