@@ -103,30 +103,11 @@
             margin: 0px auto 50px;
         }
 		
+		
 		#loader {
 			position: absolute;
 			left: 760px;
 			top: 40px;
-			border: 8px solid #f3f3f3;
-			border-radius: 50%;
-			border-top: 8px solid black;
-			border-right: 8px solid blue;
-			border-bottom: 8px solid black;
-			border-left: 8px solid blue;
-			width: 5px;
-			height: 5px;
-			-webkit-animation: spin 2s linear infinite;
-			animation: spin 2s linear infinite;
-		}
-
-		@-webkit-keyframes spin {
-		  0% { -webkit-transform: rotate(0deg); }
-		  100% { -webkit-transform: rotate(360deg); }
-		}
-
-		@keyframes spin {
-		  0% { transform: rotate(0deg); }
-		  100% { transform: rotate(360deg); }
 		}
         
     </style>
@@ -143,7 +124,7 @@
         
     </div>
 
-    <div id="loader" style="display:none"></div>
+	<img id="loader" src="Rolling.gif" ></div>
 
 	<div id='calendar'></div>
 
