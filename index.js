@@ -315,10 +315,43 @@ function chooseDoctor(preselectedDepartmentContext, res){
 				var startDate = new Date(selectedDate);
 
 				if( moment(meetingStartDateTimeISO).isAfter(new Date())) {
+                    
+                    // book appointment only in future
 
-					if( startDate.getDay() !== 6 && startDate.getDay() !== 0 ) {
+					if( startDate.getDay() == 6 || startDate.getDay() == 0 ) {
+                        
+                        //if weekend
+                        
+                        returnContext = [{ 
+							"name":"has-date", 
+							"lifespan":2, 
+							"parameters":{}
+						}];
+						speech = 'Hey no service on weekends! Please choose a weekday!';
+						
+						callback(res,speech,returnContext);
+                        
 
-						var condition = {
+
+
+					} else if(moment(selectedTime, 'hh:mm:s').isBefore(moment('10:00:00', 'hh:mm:s')) || 
+                              moment(selectedTime, 'hh:mm:s').isAfter(moment('18:00:00', 'hh:mm:s'))) {
+                        
+                        //if out of office hour
+                        
+                         returnContext = [{ 
+							"name":"has-date", 
+							"lifespan":2, 
+							"parameters":{}
+						}];
+						speech = 'We are avaible 10am - 6pm only. Please book time in business hours only.';
+						
+						callback(res,speech,returnContext);
+                        
+                        
+                    } else {
+                        
+                        var condition = {
 							"start_date_time": {
 								"$lte": new Date(meetingStartDateTimeISO)	
 							} , 
@@ -352,21 +385,11 @@ function chooseDoctor(preselectedDepartmentContext, res){
 								
 								callback(res,speech,returnContext);
 							}
-						});
-
-					}	// weekend check ends
-					else {
-						returnContext = [{ 
-							"name":"has-nothing", 
-							"lifespan":2, 
-							"parameters":{}
-						}];
-						speech = 'Hey no service on weekends! Please choose a weekday!';
-						
-						callback(res,speech,returnContext);
+						});                        
+                        
 
 					}
-				}		// future time check ends
+				}		
 				else
 				{
 					returnContext = [{ 
