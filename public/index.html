@@ -37,7 +37,7 @@
             
             
             $( "#select-doctor" ).on( "change", function() {
-                
+                $('#loader').show();
                 
                 $.ajax({
                     url: '/getMeetingForDoctor', 
@@ -48,10 +48,11 @@
                     
                     calendar.fullCalendar( 'removeEvents');
                     calendar.fullCalendar('renderEvents', data.data, true );                    
-                    
+                    $('#loader').hide();
                     
                 }).fail(function() {
                     console.log( "could not fetch meeting list!" );
+					 $('#loader').hide();
                 });
                 
                 
@@ -101,6 +102,29 @@
             width: 200px;
             margin: 0px auto 50px;
         }
+		
+		#loader {
+			border: 16px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 16px solid yellow;
+			border-right: 16px solid red;
+			border-bottom: 16px solid yellow;
+			border-left: 16px solid red;
+			width:5px;
+			height:5px;
+			-webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
+
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
         
     </style>
 </head>
@@ -116,7 +140,7 @@
         
     </div>
 
-    
+    <div id="loader"></div>
 
 	<div id='calendar'></div>
 
