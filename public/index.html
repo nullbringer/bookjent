@@ -104,27 +104,32 @@
         }
 		
 		
-		#loader {
-			position: absolute;
-			left: 760px;
-			top: 40px;
-		}
+		
         
     </style>
 </head>
 <body>
-    
-    
-    <div class="select-area">
+    <!-- 
+    <div class ="main"> 
+		<div class="select-area">
             <select id="select-doctor">
                 <option value=""></option>
-
-
-            </select>
-        
-    </div>
-
-	<img id="loader" src="Rolling.gif" style="display:none"></div>
+            </select>     
+		</div>
+		 <div class="loader-image" style="float:right">
+			<img id="loader" src="Rolling.gif" style="align:right">	
+		 </div>
+	</div> -->
+	<div class ="main" style="width:100%; overflow: hidden;">
+		<div class="select-area" style="float:left;margin-left:45%">
+            <select id="select-doctor">
+                <option value=""></option>
+            </select>     
+		</div>
+		<div class="loader-image">
+			<img id="loader" src="Rolling.gif" style="margin-left:-5%">	
+		 </div>
+	</div>
 
 	<div id='calendar'></div>
 
