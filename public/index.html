@@ -37,7 +37,7 @@
             
             
             $( "#select-doctor" ).on( "change", function() {
-                
+                $('#loader').show();
                 
                 $.ajax({
                     url: '/getMeetingForDoctor', 
@@ -48,10 +48,11 @@
                     
                     calendar.fullCalendar( 'removeEvents');
                     calendar.fullCalendar('renderEvents', data.data, true );                    
-                    
+                    $('#loader').hide();
                     
                 }).fail(function() {
                     console.log( "could not fetch meeting list!" );
+					 $('#loader').hide();
                 });
                 
                 
@@ -66,7 +67,7 @@
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay,listWeek'
                 },
-                defaultDate: new Date(),
+                defaultDate: '2017-07-14',
                 navLinks: true, // can click day/week names to navigate views
                 editable: false,
                 eventLimit: true, // allow "more" link when too many events
@@ -96,27 +97,40 @@
             max-width: 900px;
             margin: 0 auto;
         }
-
+		
+		.main {
+			width:100%; 
+			overflow: hidden;
+		
+		}
         .select-area {
             width: 200px;
             margin: 0px auto 50px;
+			loat:left;
+			margin-left:45%;
         }
+		
+		#loader {
+			display: none;
+		}
+		
+		
+		
         
     </style>
 </head>
 <body>
-    
-    
-    <div class="select-area">
+   
+	<div class ="main">
+		<div class="select-area">
             <select id="select-doctor">
                 <option value=""></option>
-
-
-            </select>
-        
-    </div>
-
-    
+            </select>     
+		</div>
+		<div class="loader-image">
+			<img id="loader" src="Rolling.gif">	
+		</div>
+	</div>
 
 	<div id='calendar'></div>
 
