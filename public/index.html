@@ -37,7 +37,7 @@
             
             
             $( "#select-doctor" ).on( "change", function() {
-                
+                $('#loader').show();
                 
                 $.ajax({
                     url: '/getMeetingForDoctor', 
@@ -48,10 +48,11 @@
                     
                     calendar.fullCalendar( 'removeEvents');
                     calendar.fullCalendar('renderEvents', data.data, true );                    
-                    
+                    $('#loader').hide();
                     
                 }).fail(function() {
                     console.log( "could not fetch meeting list!" );
+					 $('#loader').hide();
                 });
                 
                 
@@ -101,22 +102,24 @@
             width: 200px;
             margin: 0px auto 50px;
         }
+		
+		
+		
         
     </style>
 </head>
 <body>
-    
-    
-    <div class="select-area">
-            <select id="select-doctor">
-                <option value=""></option>
-
-
-            </select>
-        
-    </div>
-
-    
+   
+	<div class ="main" style="width:100%; overflow: hidden;">
+		<div class="select-area" style="float:left;margin-left:45%">
+            		<select id="select-doctor">
+                		<option value=""></option>
+            		</select>     
+		</div>
+		<div class="loader-image">
+			<img id="loader" src="Rolling.gif" style="display:none">	
+		</div>
+	</div>
 
 	<div id='calendar'></div>
 
