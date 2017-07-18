@@ -52,7 +52,7 @@
                     
                 }).fail(function() {
                     console.log( "could not fetch meeting list!" );
-					 $('#loader').hide();
+		    $('#loader').hide();
                 });
                 
                 
@@ -87,32 +87,32 @@
     <style>
 
         body {
-            margin: 40px 10px;
-            padding: 0;
-            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-            font-size: 14px;
-        }
+		    margin: 40px 10px;
+		    padding: 0;
+		    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		    font-size: 14px;
+             }
 
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+   #calendar {
+		    max-width: 900px;
+		    margin: 0 auto;
+       	     }
 		
-		.main {
-			width:100%; 
-			overflow: hidden;
+       .main {
+		    width:100%; 
+		    overflow: hidden;
+	     }
+	    
+.select-area {
+           	    width: 200px;
+            	    margin: 0px auto 50px;
+		    float:left;
+		    margin-left:45%;
+             }
 		
-		}
-        .select-area {
-            width: 200px;
-            margin: 0px auto 50px;
-			loat:left;
-			margin-left:45%;
-        }
-		
-		#loader {
-			display: none;
-		}
+     #loader {
+		    display: none;
+	     }
 		
 		
 		
