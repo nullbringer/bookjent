@@ -307,14 +307,11 @@ function chooseDoctor(preselectedDepartmentContext, res){
 
             if(selectedDate && selectedTime){
 				
-				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);
-				var meetingStartDateTimeISO = meetingStartDateTime.toISOString(); 
-				console.log(meetingStartDateTime);
-								
+				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);						
 
 				var startDate = new Date(selectedDate);
 
-				if( moment(meetingStartDateTimeISO).isAfter(new Date())) {
+				if( meetingStartDateTime.isAfter(new Date())) {
                     
                     // book appointment only in future
 
@@ -323,7 +320,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
                         //if weekend
                         
                         returnContext = [{ 
-							"name":"has-date", 
+							"name":"has-time", 
 							"lifespan":2, 
 							"parameters":{}
 						}];
@@ -353,10 +350,10 @@ function chooseDoctor(preselectedDepartmentContext, res){
                         
                         var condition = {
 							"start_date_time": {
-								"$lte": new Date(meetingStartDateTimeISO)	
+								"$lte": new Date(meetingStartDateTime.toISOString())	
 							} , 
 							  "end_date_time": {
-								"$gte": new Date(meetingStartDateTimeISO)
+								"$gte": new Date(meetingStartDateTime.toISOString())
 							} ,   
 							"doctor_name": doctorCode
 						};
@@ -371,7 +368,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+selectedDate + ' at ' + selectedTime + '. Do you confirm?';	
+								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + '. Do you confirm?';	
 								
 								callback(res,speech,returnContext);
 							}
@@ -381,7 +378,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = selectedDoctor.title + ' already booked on ' + selectedDate + ' at ' + 		 selectedTime + ' Please choose a different time'; 
+								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '. Please choose a different time.'; 
 								
 								callback(res,speech,returnContext);
 							}
