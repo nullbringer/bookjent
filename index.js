@@ -530,21 +530,7 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
                             "title":"View Portfolio"
                           }              
                         ]      
-                      },
-                        {
-                        "title":"amlan",
-                        "image_url":rootUrl + "/images/"+ selectedDoctor.image,
-                        "subtitle":"What is the best time that will work for you?",
-
-                        "buttons":[
-                          {
-                            "type":"web_url",
-                            "url":"https://xxx.xxx",
-                            "title":"View Portfolio"
-                          }              
-                        ]      
                       }
-                    ]
                   }
                 }                                                                       
             }
