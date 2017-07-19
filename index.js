@@ -168,23 +168,21 @@ app.post('/hook', function (req, res) {
                                                 
                         
                         var  customData = {
-                            "facebook": [
-                                
+                            "facebook": [                                
                                 {
-                                        "text": "Available doctors are: "
-                                    },
-                                
+                                    "text": "Available doctors from ' + requestedDepartment[0].title + ' department are: "
+                                },                                
                                 {
-                                "attachment":{
-                                  "type":"template",
-                                  "payload":{
-                                    "template_type":"generic",
-                                    "elements":[
-                                       
-                                    ]
-                                  }
-                                }                                                                       
-                            }]
+                                    "attachment":{
+                                      "type":"template",
+                                      "payload":{
+                                        "template_type":"generic",
+                                        "elements":[
+
+                                        ]
+                                      }
+                                    }                                                                       
+                                }]
                         };
                         
                         
@@ -385,6 +383,15 @@ function getDepartmentNameByCode(deptcode){
                         return (dept.value === deptcode);
                     })[0].title;
     return department;
+    
+}
+
+
+function getDoctorByCode(docCode){
+     var doctor = doctors.filter(function(doc){
+                        return (doc.value === docCode);
+                    })[0];
+    return doctor;
     
 }
 
@@ -681,6 +688,44 @@ function insertMeeting(preselectedDepartmentContext, res){
             speech = 'Thanks for booking! See you!';
              
         }
+        
+        
+        /* facebook specific */
+        
+            var  customData = {
+                "facebook": [
+                    {
+                        "attachment":{
+                          "type":"template",
+                          "payload":{
+                            "template_type":"generic",
+                            "elements":[
+                               {
+                                "title":getDoctorByCode(doctor_name).title,
+                                "image_url":rootUrl + "/images/"+ getDoctorByCode(doctor_name).image,
+                                "subtitle":dateTime.format("MMMM Do YYYY, h:mm a"),
+
+                                "buttons":[
+                                  {
+                                    "type":"web_url",
+                                    "url":"https://xxx.xxx",
+                                    "title":"View Portfolio"
+                                  }              
+                                ]      
+                              }
+                            ]
+                          }
+                        }                                                                       
+                    },
+                    {
+                        "text": "Thanks for booking the appointment! See you!"
+                    }
+                ]
+            };
+        
+        
+        
+        
         
         callback(res,speech,returnContext,customData);
     });
