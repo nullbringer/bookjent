@@ -113,8 +113,7 @@ app.post('/hook', function (req, res) {
                             customData.facebook.text += docNanme + '\n';                            
 
                         });*/      
-                        
-                        
+                                                
                         
                         var  customData = {
                             "facebook": {
@@ -131,40 +130,28 @@ app.post('/hook', function (req, res) {
                         };
                         
                         
-                        doctorObjList.forEach(function(doc){
-                            
-                            
-                            
+                        doctorObjList.forEach(function(doc){                           
                             
                             var el = {
                                 "title":doc.title,
                                 "image_url":rootUrl + "/images/"+ doc.image,
-                                "subtitle":doc.department,
+                                "subtitle":getDepartmentNameByCode(doc.department),
 
                                 "buttons":[
                                   {
                                     "type":"postback",
-                                    "title":doc.title,
+                                    "title":"Choose " + doc.title,
                                     "payload":doc.title
                                   }              
                                 ]      
-                              }
-                            
-                            
+                              };
                             
                             customData.facebook.attachment.payload.elements.push(el);                       
 
                         });
-                        
-                        
-                        
-                        
-                        
-                        
+                                                
                         /* facebook specific starts */
-                        
-                        
-                        
+                                                
 
                     } else {
                         speech = 'No doctors are available for ' + requestedDepartment[0].title;
@@ -334,6 +321,14 @@ app.post('/getMeetingForDoctor', function (req, res) {
     
 });
 
+
+function getDepartmentNameByCode(deptcode){
+     var department = departments.filter(function(dept){
+                        return (dept.value === deptcode);
+                    })[0].title;
+    return department;
+    
+}
 
 function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
