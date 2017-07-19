@@ -701,24 +701,29 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                             "template_type":"generic",
                             "elements":[
                                {
-                                "title":getDoctorByCode(newMeeting.doctor_name).title,
+                                "title":"Appointment booked with " + getDoctorByCode(newMeeting.doctor_name).title,
                                 "image_url":rootUrl + "/images/"+ getDoctorByCode(newMeeting.doctor_name).image,
-                                "subtitle":dateTime.format("MMMM Do YYYY, h:mm a"),
-
-                                "buttons":[
-                                  {
-                                    "type":"web_url",
-                                    "url":"https://xxx.xxx",
-                                    "title":"View Portfolio"
-                                  }              
-                                ]      
+                                "subtitle":"Time: " + dateTime.format("MMMM Do YYYY, h:mm a")                                   
                               }
                             ]
                           }
                         }                                                                       
                     },
                     {
-                        "text": "Thanks for booking the appointment! See you!"
+                        "attachment":{
+                          "type":"template",
+                             "payload":{
+                                "template_type":"button",
+                                "text":"Thanks for the booking. Need further assistance? Talk to a representative",
+                                "buttons":[
+                                   {
+                                      "type":"phone_number",
+                                      "title":"Call Representative",
+                                      "payload":"+15105551234"
+                                   }
+                                ]
+                             }
+                        }
                     }
                 ]
             };
