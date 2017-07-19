@@ -438,8 +438,8 @@ function chooseDoctor(preselectedDepartmentContext, res){
                                         "template_type":"generic",
                                         "elements":[
                                            {
-                                            "title":"Amlan Gupta",
-                                            "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                            "title":selectedDoctor.title,
+                                            "image_url":"https://still-falls-77175.herokuapp.com/images/female.png",
                                             "subtitle":"What is the best time that will work for you?",
                                             
                                             "buttons":[
