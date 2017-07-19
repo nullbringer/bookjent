@@ -88,7 +88,9 @@ app.post('/hook', function (req, res) {
                     });   
 
                     var doctorNames = [];
+                    var doctorObjList = [];
                     doctorForDept.forEach(function(doc){
+                        doctorObjList.push(doc);
                         doctorNames.push(doc.title);
 
                     });             
@@ -99,7 +101,7 @@ app.post('/hook', function (req, res) {
                         
                         /* facebook specific starts */
                         
-                        customData = {
+                       /* customData = {
                             "facebook": {
                                 "text": 'Available doctors from ' + requestedDepartment[0].title + ' department are:\n '+
                                         '---------- \n'                                                                        
@@ -110,7 +112,53 @@ app.post('/hook', function (req, res) {
                         doctorNames.forEach(function(docNanme){
                             customData.facebook.text += docNanme + '\n';                            
 
-                        });                        
+                        });*/      
+                        
+                        
+                        
+                        var  customData = {
+                            "facebook": {
+                                "attachment":{
+                                  "type":"template",
+                                  "payload":{
+                                    "template_type":"generic",
+                                    "elements":[
+                                       
+                                    ]
+                                  }
+                                }                                                                       
+                            }
+                        };
+                        
+                        
+                        doctorObjList.forEach(function(doc){
+                            
+                            
+                            
+                            
+                            var el = {
+                                "title":doc.title,
+                                "image_url":rootUrl + "/images/"+ doc.image,
+                                "subtitle":doc.department,
+
+                                "buttons":[
+                                  {
+                                    "type":"postback",
+                                    "title":doc.title,
+                                    "payload":doc.title
+                                  }              
+                                ]      
+                              }
+                            
+                            
+                            
+                            customData.facebook.attachment.payload.elements.push(el);                       
+
+                        });
+                        
+                        
+                        
+                        
                         
                         
                         /* facebook specific starts */
@@ -443,7 +491,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
                 
-                customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
+                //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
 				callback(res,speech,returnContext,customData);
 
@@ -457,7 +505,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
                 
-                customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
+                //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
 				callback(res,speech,returnContext,customData);
 
@@ -470,7 +518,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
                 
-                customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
+                //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				 
 				callback(res,speech,returnContext,customData);
             }
@@ -519,19 +567,6 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
                 "elements":[
                    {
                     "title":selectedDoctor.title,
-                    "image_url":rootUrl + "/images/"+ selectedDoctor.image,
-                    "subtitle":"What is the best time that will work for you?",
-
-                    "buttons":[
-                      {
-                        "type":"web_url",
-                        "url":"https://xxx.xxx",
-                        "title":"View Portfolio"
-                      }              
-                    ]      
-                  },
-                     {
-                    "title":"Amlan",
                     "image_url":rootUrl + "/images/"+ selectedDoctor.image,
                     "subtitle":"What is the best time that will work for you?",
 
