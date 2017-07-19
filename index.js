@@ -94,7 +94,7 @@ app.post('/hook', function (req, res) {
                     if(doctorNames){
 
                         speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
-                        customData = [{
+                        customData = {
                             "facebook": {
                                 "attachment": {
                                   "type": "template",
@@ -138,7 +138,7 @@ app.post('/hook', function (req, res) {
                                   }
                                 }
                               }
-                        }];
+                        };
 
                     } else {
                         speech = 'No doctors are available for ' + requestedDepartment[0].title;
@@ -565,6 +565,9 @@ function callback(res,speech,returnContext,customData){
     console.log('Context');
     console.log('==================');
     console.log(returnContext);
+     console.log('customData');
+    console.log('==================');
+    console.log(customData);
     
     
     return res.json({
