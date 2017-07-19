@@ -95,7 +95,9 @@ app.post('/hook', function (req, res) {
 
                         speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
                         customData = [{
-                            "facebook": {"text": "it's from custom fb data!"}
+                            "facebook": {"message": {
+                                    "text": "hello, world!"
+                                  }}
                         }];
 
                     } else {
