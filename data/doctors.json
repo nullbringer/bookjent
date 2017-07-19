@@ -29,7 +29,7 @@
     "value": "DOC_PDE_3",
     "department": "PDE",
     "title": "Brett Phillips",
-    "image": "male.png",
+    "image": "male1.png",
     "synonyms": [
       "Brett Phillips",
       "brett",
@@ -44,7 +44,7 @@
     "value": "DOC_ORT_4",
     "department": "ORT",
     "title": "James Hart",
-    "image": "male.png",
+    "image": "male2.png",
     "synonyms": [
       "James Hart",
       "james",
@@ -55,7 +55,7 @@
     "value": "DOC_NEU_5",
     "department": "NEU",
     "title": "Pedro Harris",
-    "image": "male.png",
+    "image": "male3.png",
     "synonyms": [
       "Pedro Harris",
       "pedro",
@@ -66,7 +66,7 @@
     "value": "DOC_GEN_6",
     "department": "GEN",
     "title": "Christa Lawrence",
-    "image": "female.png",
+    "image": "female1.png",
     "synonyms": [
       "Christa Lawrence",
       "Christa",
@@ -77,7 +77,7 @@
     "value": "DOC_CDO_7",
     "department": "CDO",
     "title": "Nickolas Christensen",
-    "image": "male.png",
+    "image": "male4.png",
     "synonyms": [
       "Nickolas Christensen",
       "Nickolas",
@@ -89,7 +89,7 @@
     "value": "DOC_GYN_8",
     "department": "GYN",
     "title": "Donovan Lindsey",
-    "image": "male.png",
+    "image": "male1.png",
     "synonyms": [
       "Donovan Lindsey",
       "Donovan",
@@ -101,7 +101,7 @@
     "value": "DOC_PDE_9",
     "department": "PDE",
     "title": "Shannon Howell",
-    "image": "female.png",
+    "image": "female2.png",
     "synonyms": [
       "Shannon Howell",
       "Shannon",
@@ -114,7 +114,7 @@
     "value": "DOC_ORT_10",
     "department": "ORT",
     "title": "Sandy Daniels",
-    "image": "female.png",
+    "image": "female3.png",
     "synonyms": [
       "Sandy Daniels",
       "Sandy",
@@ -126,7 +126,7 @@
     "value": "DOC_NEU_11",
     "department": "NEU",
     "title": "Tori Bates",
-    "image": "female.png",
+    "image": "female4.png",
     "synonyms": [
       "Tori Bates",
       "Tori",
@@ -137,7 +137,7 @@
     "value": "DOC_GEN_12",
     "department": "GEN",
     "title": "Clint Parsons",
-    "image": "male.png",
+    "image": "male2.png",
     "synonyms": [
       "Clint Parsons",
       "Clint",
