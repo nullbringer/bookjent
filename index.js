@@ -382,7 +382,25 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + '. Do you confirm?';	
+								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + ' Do you confirm?';	
+								
+								var customData = {
+											  "facebook": {
+												 "text": speech,
+												 "quick_replies": [
+													{
+													   "content_type": "text",
+													   "title": "Yes",
+													   "payload": "Yes"
+													},
+													{
+													   "content_type": "text",
+													   "title": "No",
+													   "payload": "No"
+													}
+												 ]
+											  }
+											};
 								
 								callback(res,speech,returnContext,customData);
 							}
