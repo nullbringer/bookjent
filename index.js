@@ -490,7 +490,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + ' Do you confirm?';	
+								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + '. Do you confirm?';	
 								
 								var customData = {
 											  "facebook": {
@@ -703,7 +703,7 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                                {
                                 "title":"Appointment booked with " + getDoctorByCode(newMeeting.doctor_name).title,
                                 "image_url":rootUrl + "/images/"+ getDoctorByCode(newMeeting.doctor_name).image,
-                                "subtitle":"Time: " + dateTime.format("MMMM Do YYYY, h:mm a")                                   
+                                "subtitle":"Time: " + moment(newMeeting.start_date_time).format("MMMM Do YYYY, h:mm a")                                   
                               }
                             ]
                           }
