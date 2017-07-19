@@ -79,7 +79,7 @@ app.post('/hook', function (req, res) {
 
                     customData = {
                         "facebook": {
-                            "text": "Hi there! I'm Eve, your friendly booking guide. Choose a department to proceed: \n"+
+                            "text": "Hi there! I'm Eve 💁 your friendly booking guide. Choose a department to proceed: \n"+
                                     "-------------- \n"                                                                
                           }
                     };
@@ -446,7 +446,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 							"lifespan":2, 
 							"parameters":{}
 						}];
-						speech = 'Hey no service on weekends! Please choose a weekday!';
+						speech = 'Hey! No service on weekends! Please choose a weekday!';
 						
 						callback(res,speech,returnContext,customData);
                         
@@ -518,7 +518,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '. Please suggest a different time.'; 
+								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '.😣 Please suggest a different time.'; 
 								
 								callback(res,speech,returnContext,customData);
 							}
@@ -534,7 +534,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 						"lifespan":2, 
 						"parameters":{}
 					}];
-					speech = 'We do not heal the past by dwelling there! 😋 \nPlease select a date in future';
+					speech = 'We do not heal the past by dwelling there! 😜 \nPlease select a date in future';
 					
 					callback(res,speech,returnContext,customData);
 				}
@@ -714,7 +714,7 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                           "type":"template",
                              "payload":{
                                 "template_type":"button",
-                                "text":"Thanks for the booking. Need further assistance? Talk to a representative",
+                                "text":"Thanks for the booking 👍 \nNeed further assistance? Talk to a representative",
                                 "buttons":[
                                    {
                                       "type":"phone_number",
