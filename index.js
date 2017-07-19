@@ -97,7 +97,7 @@ app.post('/hook', function (req, res) {
                         
                         /* facebook specific starts */
                         
-                     /*   customData = {
+                        customData = {
                             "facebook": {
                                 "text": 'Available doctors from ' + requestedDepartment[0].title + ' department are:\n '+
                                         '---------- \n'                                                                        
@@ -108,38 +108,7 @@ app.post('/hook', function (req, res) {
                         doctorNames.forEach(function(docNanme){
                             customData.facebook.text += docNanme + '\n';                            
 
-                        });   */   
-                        
-                        
-                    customData = {
-                            "facebook": {
-                                    "attachment":{
-                                      "type":"template",
-                                      "payload":{
-                                        "template_type":"generic",
-                                        "elements":[
-                                           {
-                                            "title":"Welcome to Peter\'s Hats",
-                                            "image_url":"https://petersfancybrownhats.com/company_image.png",
-                                            "subtitle":"Thanks for choosing Amlan. Do you want to bla bla",
-                                            
-                                            "buttons":[
-                                              {
-                                                "type":"web_url",
-                                                "url":"https://petersfancybrownhats.com",
-                                                "title":"View Website"
-                                              },{
-                                                "type":"postback",
-                                                "title":"Start Chatting",
-                                                "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                                              }              
-                                            ]      
-                                          }
-                                        ]
-                                      }
-                                    }                                                                       
-                              }
-                        };
+                        });                        
                         
                         
                         /* facebook specific starts */
@@ -460,6 +429,32 @@ function chooseDoctor(preselectedDepartmentContext, res){
                 }];
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
+                
+                customData = {
+                            "facebook": {
+                                    "attachment":{
+                                      "type":"template",
+                                      "payload":{
+                                        "template_type":"generic",
+                                        "elements":[
+                                           {
+                                            "title":"Amlan Gupta",
+                                            "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                            "subtitle":"What is the best time that will work for you?",
+                                            
+                                            "buttons":[
+                                              {
+                                                "type":"web_url",
+                                                "url":"https://google.com",
+                                                "title":"View Portfolio"
+                                              }              
+                                            ]      
+                                          }
+                                        ]
+                                      }
+                                    }                                                                       
+                              }
+                        };
 				
 				callback(res,speech,returnContext,customData);
 
