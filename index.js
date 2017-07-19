@@ -139,7 +139,7 @@ app.post('/hook', function (req, res) {
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
                     
-                    chooseDoctor(preselectedDepartmentContext,res);
+                    chooseDoctor(preselectedDepartmentContext,res,rootUrl);
                     
                     break;
                     
@@ -294,7 +294,7 @@ app.post('/getMeetingForDoctor', function (req, res) {
 
 
 
-function chooseDoctor(preselectedDepartmentContext, res){
+function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
     var speech = '';
     var returnContext = [];
