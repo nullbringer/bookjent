@@ -701,8 +701,8 @@ function insertMeeting(preselectedDepartmentContext, res){
                             "template_type":"generic",
                             "elements":[
                                {
-                                "title":getDoctorByCode(doctor_name).title,
-                                "image_url":rootUrl + "/images/"+ getDoctorByCode(doctor_name).image,
+                                "title":getDoctorByCode(newMeeting.doctor_name).title,
+                                "image_url":rootUrl + "/images/"+ getDoctorByCode(newMeeting.doctor_name).image,
                                 "subtitle":dateTime.format("MMMM Do YYYY, h:mm a"),
 
                                 "buttons":[
