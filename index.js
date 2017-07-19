@@ -430,31 +430,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
                 
-                customData = {
-                            "facebook": {
-                                    "attachment":{
-                                      "type":"template",
-                                      "payload":{
-                                        "template_type":"generic",
-                                        "elements":[
-                                           {
-                                            "title":selectedDoctor.title,
-                                            "image_url":"https://still-falls-77175.herokuapp.com/images/female.png",
-                                            "subtitle":"What is the best time that will work for you?",
-                                            
-                                            "buttons":[
-                                              {
-                                                "type":"web_url",
-                                                "url":"https://google.com",
-                                                "title":"View Portfolio"
-                                              }              
-                                            ]      
-                                          }
-                                        ]
-                                      }
-                                    }                                                                       
-                              }
-                        };
+                customData = setCustomDataForChooseDoctor(selectedDoctor);
 				
 				callback(res,speech,returnContext,customData);
 
@@ -467,6 +443,8 @@ function chooseDoctor(preselectedDepartmentContext, res){
                 }];
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+                
+                customData = setCustomDataForChooseDoctor(selectedDoctor);
 				
 				callback(res,speech,returnContext,customData);
 
@@ -477,9 +455,11 @@ function chooseDoctor(preselectedDepartmentContext, res){
                     "parameters":{}
                 }];
 
-                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                
+                customData = setCustomDataForChooseDoctor(selectedDoctor);
 				 
-				 callback(res,speech,returnContext,customData);
+				callback(res,speech,returnContext,customData);
             }
 
 
@@ -511,6 +491,41 @@ function chooseDoctor(preselectedDepartmentContext, res){
 		callback(res,speech,returnContext,customData);
 
     }
+    
+}
+
+function setCustomDataForChooseDoctor(selectedDoctor){
+    
+    
+    var  customData = {
+        "facebook": {
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"generic",
+                "elements":[
+                   {
+                    "title":selectedDoctor.title,
+                    "image_url":"https://still-falls-77175.herokuapp.com/images/"+ selectedDoctor.image,
+                    "subtitle":"What is the best time that will work for you?",
+
+                    "buttons":[
+                      {
+                        "type":"web_url",
+                        "url":"https://xxx.xxx",
+                        "title":"View Portfolio"
+                      }              
+                    ]      
+                  }
+                ]
+              }
+            }                                                                       
+        }
+    };
+    
+    return customData;
+    
+    
     
 }
 
