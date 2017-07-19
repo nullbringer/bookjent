@@ -511,30 +511,42 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     var  customData = {
-        "facebook": [
-            {
-                "attachment":{
-                  "type":"template",
-                  "payload":{
-                    "template_type":"generic",
-                    "elements":[
-                       {
-                        "title":selectedDoctor.title,
-                        "image_url":rootUrl + "/images/"+ selectedDoctor.image,
-                        "subtitle":"What is the best time that will work for you?",
+        "facebook": {
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"generic",
+                "elements":[
+                   {
+                    "title":selectedDoctor.title,
+                    "image_url":rootUrl + "/images/"+ selectedDoctor.image,
+                    "subtitle":"What is the best time that will work for you?",
 
-                        "buttons":[
-                          {
-                            "type":"web_url",
-                            "url":"https://xxx.xxx",
-                            "title":"View Portfolio"
-                          }              
-                        ]      
-                      }
+                    "buttons":[
+                      {
+                        "type":"web_url",
+                        "url":"https://xxx.xxx",
+                        "title":"View Portfolio"
+                      }              
+                    ]      
+                  },
+                     {
+                    "title":"Amlan",
+                    "image_url":rootUrl + "/images/"+ selectedDoctor.image,
+                    "subtitle":"What is the best time that will work for you?",
+
+                    "buttons":[
+                      {
+                        "type":"web_url",
+                        "url":"https://xxx.xxx",
+                        "title":"View Portfolio"
+                      }              
+                    ]      
                   }
-                }                                                                       
-            }
-        ]
+                ]
+              }
+            }                                                                       
+        }
     };
     
     return JSON.stringify(customData);
