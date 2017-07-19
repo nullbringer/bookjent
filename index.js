@@ -79,8 +79,8 @@ app.post('/hook', function (req, res) {
 
                     customData = {
                         "facebook": {
-                            "text": 'Hi there! If you want to book an appointment, choose a department to proceed: \n'+
-                                    '-------------- \n'                                                                        
+                            "text": "Hi there! I'm Eve 💁 your friendly booking guide. Choose a department to proceed: \n"+
+                                    "-------------- \n"                                                                
                           }
                     };
 
@@ -168,17 +168,21 @@ app.post('/hook', function (req, res) {
                                                 
                         
                         var  customData = {
-                            "facebook": {
-                                "attachment":{
-                                  "type":"template",
-                                  "payload":{
-                                    "template_type":"generic",
-                                    "elements":[
-                                       
-                                    ]
-                                  }
-                                }                                                                       
-                            }
+                            "facebook": [                                
+                                {
+                                    "text": "Available doctors from " + requestedDepartment[0].title + " department are: "
+                                },                                
+                                {
+                                    "attachment":{
+                                      "type":"template",
+                                      "payload":{
+                                        "template_type":"generic",
+                                        "elements":[
+
+                                        ]
+                                      }
+                                    }                                                                       
+                                }]
                         };
                         
                         
@@ -198,7 +202,7 @@ app.post('/hook', function (req, res) {
                                 ]      
                               };
                             
-                            customData.facebook.attachment.payload.elements.push(el);                       
+                            customData.facebook[1].attachment.payload.elements.push(el);                       
 
                         });
                                                 
@@ -238,7 +242,7 @@ app.post('/hook', function (req, res) {
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
                     
-                    insertMeeting(preselectedDepartmentContext,res);                   
+                    insertMeeting(preselectedDepartmentContext,res,rootUrl);                   
                                         
                     
                     break;
@@ -382,6 +386,15 @@ function getDepartmentNameByCode(deptcode){
     
 }
 
+
+function getDoctorByCode(docCode){
+     var doctor = doctors.filter(function(doc){
+                        return (doc.value === docCode);
+                    })[0];
+    return doctor;
+    
+}
+
 function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
     var speech = '';
@@ -433,7 +446,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 							"lifespan":2, 
 							"parameters":{}
 						}];
-						speech = 'Hey no service on weekends! Please choose a weekday!';
+						speech = 'Hey! No service on weekends! Please choose a weekday!';
 						
 						callback(res,speech,returnContext,customData);
                         
@@ -450,7 +463,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                             "lifespan":2, 
                             "parameters":{}
                         }];
-                        speech = 'We are avaible 10am - 6pm only. Please book time in business hours only.';
+                        speech = 'We are available 10am - 6pm only. Please book time in business hours only.';
 
                         callback(res,speech,returnContext,customData);
 
@@ -477,7 +490,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + ' Do you confirm?';	
+								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + '. Do you confirm?';	
 								
 								var customData = {
 											  "facebook": {
@@ -505,7 +518,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '. Please choose a different time.'; 
+								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '.😣 Please suggest a different time.'; 
 								
 								callback(res,speech,returnContext,customData);
 							}
@@ -521,7 +534,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 						"lifespan":2, 
 						"parameters":{}
 					}];
-					speech = 'Time selected is past! Please select a valid one..';
+					speech = 'We do not heal the past by dwelling there! 😜 \nPlease select a date in future';
 					
 					callback(res,speech,returnContext,customData);
 				}
@@ -536,7 +549,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 }];
 
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
+                speech = 'Sure! What is the best time that will work for you?';
                 
                 //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
@@ -550,7 +563,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 }];
 
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+                speech = 'Okay. On which date should I book the appointment?';
                 
                 //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
@@ -563,7 +576,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 }];
 
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                speech = 'Okay. When do you want to book the appointment with ' + selectedDoctor.title + '?';
                 
                 //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				 
@@ -602,7 +615,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
 }
 
-function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
+/*function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     var  customData = {
@@ -635,10 +648,10 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     
-}
+}*/
 
 
-function insertMeeting(preselectedDepartmentContext, res){
+function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     
     var speech = '';
     var returnContext = [];
@@ -675,6 +688,49 @@ function insertMeeting(preselectedDepartmentContext, res){
             speech = 'Thanks for booking! See you!';
              
         }
+        
+        
+        /* facebook specific */
+        
+            var  customData = {
+                "facebook": [
+                    {
+                        "attachment":{
+                          "type":"template",
+                          "payload":{
+                            "template_type":"generic",
+                            "elements":[
+                               {
+                                "title":"Appointment booked with " + getDoctorByCode(newMeeting.doctor_name).title,
+                                "image_url":rootUrl + "/images/"+ getDoctorByCode(newMeeting.doctor_name).image,
+                                "subtitle":"Time: " + moment(newMeeting.start_date_time).format("MMMM Do YYYY, h:mm a")                                   
+                              }
+                            ]
+                          }
+                        }                                                                       
+                    },
+                    {
+                        "attachment":{
+                          "type":"template",
+                             "payload":{
+                                "template_type":"button",
+                                "text":"Thanks for the booking 👍 \nNeed further assistance? Talk to a representative",
+                                "buttons":[
+                                   {
+                                      "type":"phone_number",
+                                      "title":"Call Representative",
+                                      "payload":"+15105551234"
+                                   }
+                                ]
+                             }
+                        }
+                    }
+                ]
+            };
+        
+        
+        
+        
         
         callback(res,speech,returnContext,customData);
     });
