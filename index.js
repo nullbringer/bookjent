@@ -493,7 +493,7 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     var  customData = {
-        "facebook": {
+        "facebook": [{
             "attachment":{
               "type":"template",
               "payload":{
@@ -515,7 +515,9 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
                 ]
               }
             }                                                                       
-        }
+        }, {
+            "text":"hello, world!"
+        }]
     };
     
     return customData;
