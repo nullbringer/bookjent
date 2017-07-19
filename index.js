@@ -121,14 +121,8 @@ app.post('/hook', function (req, res) {
                                            {
                                             "title":"Welcome to Peter\'s Hats",
                                             "image_url":"https://petersfancybrownhats.com/company_image.png",
-                                            "subtitle":"We\'ve got the right hat for everyone.",
-                                            "default_action": {
-                                              "type": "web_url",
-                                              "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
-                                              "messenger_extensions": true,
-                                              "webview_height_ratio": "tall",
-                                              "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                                            },
+                                            "subtitle":"Thanks for choosing Amlan. Do you want to bla bla",
+                                            
                                             "buttons":[
                                               {
                                                 "type":"web_url",
