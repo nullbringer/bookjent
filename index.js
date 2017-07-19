@@ -51,6 +51,8 @@ app.post('/hook', function (req, res) {
 
     console.log('HOOK REQUEST');
     console.log('++++++++++++++');
+    
+    var rootUrl = req.protocol + '://' + req.get('host');
 
     try {
         var speech = 'empty speech';
@@ -430,7 +432,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
                 
-                customData = setCustomDataForChooseDoctor(selectedDoctor);
+                customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
 				callback(res,speech,returnContext,customData);
 
@@ -444,7 +446,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
                 
-                customData = setCustomDataForChooseDoctor(selectedDoctor);
+                customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
 				callback(res,speech,returnContext,customData);
 
@@ -457,7 +459,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
 
                 speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
                 
-                customData = setCustomDataForChooseDoctor(selectedDoctor);
+                customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				 
 				callback(res,speech,returnContext,customData);
             }
@@ -494,7 +496,7 @@ function chooseDoctor(preselectedDepartmentContext, res){
     
 }
 
-function setCustomDataForChooseDoctor(selectedDoctor){
+function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     var  customData = {
@@ -506,7 +508,7 @@ function setCustomDataForChooseDoctor(selectedDoctor){
                 "elements":[
                    {
                     "title":selectedDoctor.title,
-                    "image_url":"https://still-falls-77175.herokuapp.com/images/"+ selectedDoctor.image,
+                    "image_url":rootUrl + "/images/"+ selectedDoctor.image,
                     "subtitle":"What is the best time that will work for you?",
 
                     "buttons":[
