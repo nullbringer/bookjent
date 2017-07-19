@@ -95,9 +95,49 @@ app.post('/hook', function (req, res) {
 
                         speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
                         customData = [{
-                            "facebook": {"message": {
-                                    "text": "hello, world!"
-                                  }}
+                            "facebook": {
+                                "attachment": {
+                                  "type": "template",
+                                  "payload": {
+                                    "template_type": "list",
+                                    "elements": [
+                                      {
+                                        "title": "Classic T-Shirt Collection",
+                                        "image_url": "https://xvir.github.io/img/apiai.png",
+                                        "subtitle": "See all our colors",
+                                        "default_action": {
+                                          "type": "web_url",
+                                          "url": "https://xvir.github.io/"
+
+                                        },
+                                        "buttons": [
+                                          {
+                                            "title": "View",
+                                            "type": "web_url",
+                                            "url": "https://xvir.github.io/"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "title": "Classic T-Shirt Collection",
+                                        "image_url": "https://xvir.github.io/img/apiai.png",
+                                        "subtitle": "See all our colors",
+                                        "default_action": {
+                                          "type": "web_url",
+                                          "url": "http://xvir.github.io/"
+                                        },
+                                        "buttons": [
+                                          {
+                                            "title": "View",
+                                            "type": "web_url",
+                                            "url": "https://xvir.github.io/"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
                         }];
 
                     } else {
