@@ -79,7 +79,7 @@ app.post('/hook', function (req, res) {
 
                     customData = {
                         "facebook": {
-                            "text": 'Hi there! If you want to book an appointment, choose a department to proceed \n'+
+                            "text": 'Hi there! If you want to book an appointment, choose a department to proceed: \n'+
                                     '-------------- \n'                                                                        
                           }
                     };
@@ -94,6 +94,33 @@ app.post('/hook', function (req, res) {
                     callback(res,speech,returnContext,customData);
                     
                     break;
+                    
+                    
+                case 'input.unknown':
+                    console.log('Fired: input.unknown');
+                    speech = "I'm afraid I don't understand.";
+                    
+                    
+                    /* facebook specific starts */
+
+                    customData = {
+                        "facebook": {
+                            "text": "I'm afraid I don't understand! If you want to book an appointment, choose a department to proceed: \n"+
+                                    "-------------- \n"                                                                       
+                          }
+                    };
+
+                    
+                    departments.forEach(function(dept){
+                        customData.facebook.text += dept.title + '\n';          
+                        
+                    });
+                    
+                    
+                    callback(res,speech,returnContext,customData);
+                    
+                    break;
+                    
                     
                 case 'search.doctorsByDepartment':
                     
