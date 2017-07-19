@@ -85,12 +85,13 @@ app.post('/hook', function (req, res) {
                     };
 
                     
-                    departments.filter(function(dept){
+                    departments.forEach(function(dept){
                         customData.facebook.text += dept.title + '\n';          
                         
                     });
                     
                     
+                    callback(res,speech,returnContext,customData);
                     
                     break;
                     
