@@ -98,7 +98,7 @@ app.post('/hook', function (req, res) {
                         customData = {
                             "facebook": {
                                 "text": 'Available doctors from ' + requestedDepartment[0].title + ' department are:\n '+
-                                        '---------- \n';                                                                        
+                                        '---------- \n'                                                                        
                               }
                         };
                         
