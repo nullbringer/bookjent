@@ -287,13 +287,6 @@ app.post('/getMeetingForDoctor', function (req, res) {
 });
 
 
-
-
-
-
-
-
-
 function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
     var speech = '';
