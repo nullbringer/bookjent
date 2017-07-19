@@ -494,35 +494,36 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     var  customData = {
         "facebook": [
-        {
-            "text": "blabla"
-        },
-        {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [
-                        {
-                            "title": "Some title",
-                            "subtitle": "Some subtitle",
-                            "image_url": "image url",
-                            "buttons": [
-                                {
-                                    "title": "More info",
-                                    "type": "web_url",
-                                    "url": "url"
-                                }
-                            ]
-                        }
+            {
+                "attachment":{
+                  "type":"template",
+                  "payload":{
+                    "template_type":"generic",
+                    "elements":[
+                       {
+                        "title":selectedDoctor.title,
+                        "image_url":rootUrl + "/images/"+ selectedDoctor.image,
+                        "subtitle":"What is the best time that will work for you?",
+
+                        "buttons":[
+                          {
+                            "type":"web_url",
+                            "url":"https://xxx.xxx",
+                            "title":"View Portfolio"
+                          }              
+                        ]      
+                      }
                     ]
-                }
+                  }
+                }                                                                       
+            }, 
+            {
+                "text":"hello, world!"
             }
-        }
-    ]
+        ]
     };
     
-    return customData;
+    return JSON.stringify(customData);
     
     
     
