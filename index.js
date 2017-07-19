@@ -79,8 +79,8 @@ app.post('/hook', function (req, res) {
 
                     customData = {
                         "facebook": {
-                            "text": 'Hi there! If you want to book an appointment, choose a department to proceed: \n'+
-                                    '-------------- \n'                                                                        
+                            "text": "Hi there! I'm Eve, your friendly booking guide. Choose a department to proceed: \n"+
+                                    "-------------- \n"                                                                
                           }
                     };
 
@@ -170,7 +170,7 @@ app.post('/hook', function (req, res) {
                         var  customData = {
                             "facebook": [                                
                                 {
-                                    "text": "Available doctors from ' + requestedDepartment[0].title + ' department are: "
+                                    "text": "Available doctors from " + requestedDepartment[0].title + " department are: "
                                 },                                
                                 {
                                     "attachment":{
@@ -463,7 +463,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                             "lifespan":2, 
                             "parameters":{}
                         }];
-                        speech = 'We are avaible 10am - 6pm only. Please book time in business hours only.';
+                        speech = 'We are available 10am - 6pm only. Please book time in business hours only.';
 
                         callback(res,speech,returnContext,customData);
 
@@ -549,7 +549,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 }];
 
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. What is the best time that will work for you?';
+                speech = 'Sure! What is the best time that will work for you?';
                 
                 //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
@@ -563,7 +563,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 }];
 
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. On which date should I book the appointment?';
+                speech = 'Okay. On which date should I book the appointment?';
                 
                 //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				
@@ -576,7 +576,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 }];
 
-                speech = 'Thanks for choosing ' + selectedDoctor.title + '. When do you want to book the appointment?';
+                speech = 'Okay. When do you want to book the appointment with ' + selectedDoctor.title + '?';
                 
                 //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
 				 
