@@ -518,7 +518,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								"lifespan":2, 
 								"parameters":{}
 								}];
-								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '. Please choose a different time.'; 
+								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '. Please suggest a different time.'; 
 								
 								callback(res,speech,returnContext,customData);
 							}
@@ -534,7 +534,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 						"lifespan":2, 
 						"parameters":{}
 					}];
-					speech = 'Time selected is past! Please select a valid one..';
+					speech = 'We do not heal the past by dwelling there! 😋 \nPlease select a date in future';
 					
 					callback(res,speech,returnContext,customData);
 				}
