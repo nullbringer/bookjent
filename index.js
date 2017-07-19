@@ -70,6 +70,30 @@ app.post('/hook', function (req, res) {
             
             switch(requestBody.result.action){
                     
+                case 'input.welcome':
+                    console.log('Fired: input.welcome');
+                    speech = 'Hi there!'
+                    
+                    
+                    /* facebook specific starts */
+
+                    customData = {
+                        "facebook": {
+                            "text": 'Hi there! If you want to book an appointment, choose a department to proceed \n'+
+                                    '-------------- \n'                                                                        
+                          }
+                    };
+
+                    
+                    departments.filter(function(dept){
+                        customData.facebook.text += dept.title + '\n';          
+                        
+                    });
+                    
+                    
+                    
+                    break;
+                    
                 case 'search.doctorsByDepartment':
                     
                     /*  searching doctors by department */
