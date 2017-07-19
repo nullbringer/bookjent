@@ -168,7 +168,13 @@ app.post('/hook', function (req, res) {
                                                 
                         
                         var  customData = {
-                            "facebook": {
+                            "facebook": [
+                                
+                                {
+                                        "text": "Available doctors are: "
+                                    },
+                                
+                                {
                                 "attachment":{
                                   "type":"template",
                                   "payload":{
@@ -178,7 +184,7 @@ app.post('/hook', function (req, res) {
                                     ]
                                   }
                                 }                                                                       
-                            }
+                            }]
                         };
                         
                         
@@ -602,7 +608,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
 }
 
-function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
+/*function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     var  customData = {
@@ -635,7 +641,7 @@ function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
     
     
     
-}
+}*/
 
 
 function insertMeeting(preselectedDepartmentContext, res){
