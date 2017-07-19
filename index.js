@@ -204,7 +204,7 @@ app.post('/hook', function (req, res) {
                                 ]      
                               };
                             
-                            customData.facebook.attachment.payload.elements.push(el);                       
+                            customData.facebook[1].attachment.payload.elements.push(el);                       
 
                         });
                                                 
