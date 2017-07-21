@@ -423,8 +423,8 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
 
             
-            var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-            var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+            var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+            var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
 
 
             if(selectedDate && selectedTime){
@@ -657,8 +657,8 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     var returnContext = [];
     var customData = [];
     
-    var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-    var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+    var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+    var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
 
     var timeArr = selectedTime.split(':');
     var dateTime = moment(selectedDate);
