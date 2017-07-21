@@ -514,7 +514,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 							}
 							else {
 								returnContext = [{ 
-								"name":"has-nothing", 
+								"name":"has-date", 
 								"lifespan":2, 
 								"parameters":{}
 								}];
