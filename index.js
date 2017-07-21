@@ -423,8 +423,8 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
 
             
-            var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-            var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+            var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+            var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
 
 
             if(selectedDate && selectedTime){
@@ -514,7 +514,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 							}
 							else {
 								returnContext = [{ 
-								"name":"has-nothing", 
+								"name":"has-date", 
 								"lifespan":2, 
 								"parameters":{}
 								}];
@@ -657,8 +657,8 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     var returnContext = [];
     var customData = [];
     
-    var selectedDate = preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-    var selectedTime = preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+    var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+    var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
 
     var timeArr = selectedTime.split(':');
     var dateTime = moment(selectedDate);
@@ -692,7 +692,7 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
         
         /* facebook specific */
         
-            var  customData = {
+            customData = {
                 "facebook": [
                     {
                         "attachment":{
@@ -727,6 +727,46 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                     }
                 ]
             };
+        
+        
+            returnContext = [
+                {
+                    "name":"has-nothing", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"has-date", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"has-time", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"has-date-time", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"getdoctorsbydepartment-followup", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"choosedoctor-followup-2", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"choosedoctor-followup", 
+                    "lifespan":0, 
+                    "parameters":{}
+                }
+                            
+            ];
         
         
         
