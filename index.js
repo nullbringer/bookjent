@@ -751,7 +751,7 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                     "parameters":{}
                 },
                 {
-                    "name":"Getdoctorsbydepartment-followup", 
+                    "name":"getdoctorsbydepartment-followup", 
                     "lifespan":0, 
                     "parameters":{}
                 },
