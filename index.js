@@ -692,7 +692,7 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
         
         /* facebook specific */
         
-            var  customData = {
+            customData = {
                 "facebook": [
                     {
                         "attachment":{
@@ -727,6 +727,46 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                     }
                 ]
             };
+        
+        
+            returnContext = [
+                {
+                    "name":"has-nothing", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"has-date", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"has-time", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"has-date-time", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"Getdoctorsbydepartment-followup", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"choosedoctor-followup-2", 
+                    "lifespan":0, 
+                    "parameters":{}
+                },
+                {
+                    "name":"choosedoctor-followup", 
+                    "lifespan":0, 
+                    "parameters":{}
+                }
+                            
+            ];
         
         
         
