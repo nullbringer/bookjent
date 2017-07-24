@@ -229,6 +229,10 @@ app.post('/hook', function (req, res) {
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
+					
+					var checkIfDateOrTimeChanged = requestBody.result.contexts.filter(function(context){
+                        return context.name === 'checkIfDateOrTimeChanged';
+                    })[0];
                     
                     chooseDoctor(preselectedDepartmentContext,res,rootUrl);
                     
@@ -240,6 +244,10 @@ app.post('/hook', function (req, res) {
                                         
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
+                    })[0];
+					
+					var checkIfDateOrTimeChanged = requestBody.result.contexts.filter(function(context){
+                        return context.name === 'checkIfDateOrTimeChanged';
                     })[0];
                     
                     insertMeeting(preselectedDepartmentContext,res,rootUrl);                   
@@ -423,15 +431,69 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
 
             
-            var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-            var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
-
-
-            if(selectedDate && selectedTime){
+            var selectedDate = preselectedDepartmentContext.parameters.date;
+            var selectedTime = preselectedDepartmentContext.parameters.time;
+			
+			
+			if(checkIfDateOrTimeChanged!== null)
+			{
+				var selectedDateFromContext = checkIfDateOrTimeChanged.parameters.date;
+				var selectedTimeFromContext = checkIfDateOrTimeChanged.parameters.time;
 				
-				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);						
+			}
+			
+			/*if(selectedDate !== "" && selectedTime === "")
+			{
+				checkIfDateOrTimeChanged = [{ 
+							"name":"checkIfDateOrTimeChanged", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDate,
+								"time":selectedTimeFromOldContext
+							}
+						}];
+			}
+			
+			if(selectedDate === "" && selectedTime !== "" )
+			{
+				checkIfDateOrTimeChanged = [{ 
+							"name":"checkIfDateOrTimeChanged", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDateFromOldContext,
+								"time":selectedTime
+							}
+						}];
+			}
+			
+			if(selectedDate === "" && selectedTime === "" )
+			{
+				checkIfDateOrTimeChanged = [{ 
+							"name":"checkIfDateOrTimeChanged", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDateFromOldContext,
+								"time":selectedTimeFromOldContext
+							}
+						}];
+			}*/
+			
+			returnContext = [{ 
+							"name":"checkIfDateOrTimeChanged", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDate || selectedDateFromContext,
+								"time":selectedTime || selectedTimeFromContext
+							}
+						}];
 
-				var startDate = new Date(selectedDate);
+            if(checkIfDateOrTimeChanged.parameters.date && checkIfDateOrTimeChanged.parameters.time){
+				
+				var newDateFromContext = selectedDate || checkIfDateOrTimeChanged.parameters.date;
+				var newTimeFromContext = selectedTime || checkIfDateOrTimeChanged.parameters.time;
+				
+				var meetingStartDateTime = moment(newDateFromContext + " " + newTimeFromContext);						
+				var startDate = new Date(newDateFromContext);
 
 				if( meetingStartDateTime.isAfter(new Date())) {
                     
@@ -541,7 +603,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
 
 
-			} else if(selectedDate) {
+			} else if(newDateFromContext) {
 				
                 returnContext = [{
                     "name":"has-date", 
@@ -555,7 +617,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 				
 				callback(res,speech,returnContext,customData);
 
-            } else if(selectedTime) {
+            } else if(newTimeFromContext) {
 				
                 returnContext = [{
                     "name":"has-time", 
@@ -659,9 +721,34 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     
     var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
     var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+	  
+    var selectedDate = preselectedDepartmentContext.parameters.date;
+	var selectedTime = preselectedDepartmentContext.parameters.time;
+			
+			
+	if(checkIfDateOrTimeChanged!== null)
+	{
+		var selectedDateFromContext = checkIfDateOrTimeChanged.parameters.date;
+		var selectedTimeFromContext = checkIfDateOrTimeChanged.parameters.time;
+		
+	}
+	
+	
+	returnContext = [{ 
+							"name":"checkIfDateOrTimeChanged", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDate || selectedDateFromContext,
+								"time":selectedTime || selectedTimeFromContext
+							}
+					}];
+					
+	var newDateFromContext = selectedDate || checkIfDateOrTimeChanged.parameters.date;
+	var newTimeFromContext = selectedTime || checkIfDateOrTimeChanged.parameters.time;
 
-    var timeArr = selectedTime.split(':');
-    var dateTime = moment(selectedDate);
+    var timeArr = newTimeFromContext.split(':');
+    var dateTime = moment(newDateFromContext);
+	
     dateTime = dateTime.set({
        'hour' : timeArr[0],
        'minute'  : timeArr[1],
@@ -764,7 +851,15 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                     "name":"choosedoctor-followup", 
                     "lifespan":0, 
                     "parameters":{}
-                }
+                },
+				{
+					"name":"checkIfDateOrTimeChanged", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDate || selectedDateFromContext,
+								"time":selectedTime || selectedTimeFromContext
+							}
+				}
                             
             ];
         
@@ -778,7 +873,7 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
 }
 
 
-function callback(res,speech,returnContext,customData){
+function callback(res,speech,returnContext,checkIfDateOrTimeChanged,customData){
     
     console.log('Speech');
     console.log('==================');
