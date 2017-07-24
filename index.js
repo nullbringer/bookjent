@@ -423,9 +423,11 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
 
             
-            var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-            var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
-
+            /*var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+            var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;*/
+			
+			var selectedDate = preselectedDepartmentContext.parameters.date;
+            var selectedTime = preselectedDepartmentContext.parameters.time;
 
             if(selectedDate && selectedTime){
 				
@@ -441,11 +443,22 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                         
                         //if weekend
                         
-                        returnContext = [{ 
+                       /*  returnContext = [{ 
 							"name":"has-time", 
 							"lifespan":2, 
 							"parameters":{}
+						}]; */
+						
+						returnContext = [{
+							"name":"has-time".
+							"lifespan":5,
+							"parameters":
+								{
+								  "date":selectedTime,
+								  "time":"";
+								}
 						}];
+						
 						speech = 'Hey! No service on weekends! Please choose a weekday!';
 						
 						callback(res,speech,returnContext,customData);
@@ -458,11 +471,22 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                         
                         //if out of office hour
 
-                        returnContext = [{ 
+                        /* returnContext = [{ 
                             "name":"has-date", 
                             "lifespan":2, 
                             "parameters":{}
-                        }];
+                        }]; */
+						
+						returnContext = [{
+							"name":"has-date".
+							"lifespan":5,
+							"parameters":
+								{
+								  "date":selectedDate,
+								  "time":selectedTime;
+								}
+						}];
+						
                         speech = 'We are available 10am - 6pm only. Please book time in business hours only.';
 
                         callback(res,speech,returnContext,customData);
@@ -485,11 +509,22 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 						db.collection('meeting_default').find(condition).count().then(function(numOfConfictMeetings) {
 							//console.log('numOfConfictMeetings:'+numOfConfictMeetings);
 							if(numOfConfictMeetings === 0) {
-								returnContext = [{
+								/*returnContext = [{
 								"name":"has-date-time", 
 								"lifespan":2, 
 								"parameters":{}
+								}];*/
+								
+								returnContext = [{
+									"name":"has-date-time".
+									"lifespan":5,
+									"parameters":
+									{
+										"date":selectedDate,
+										"time":selectedTime;
+									}
 								}];
+								
 								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + '. Do you confirm?';	
 								
 								var customData = {
@@ -513,10 +548,14 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								callback(res,speech,returnContext,customData);
 							}
 							else {
-								returnContext = [{ 
-								"name":"has-date", 
-								"lifespan":2, 
-								"parameters":{}
+								returnContext = [{
+									"name":"has-date".
+									"lifespan":5,
+									"parameters":
+									{
+										"date":selectedDate,
+										"time":selectedTime;
+									}
 								}];
 								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '.😣 Please suggest a different time.'; 
 								
