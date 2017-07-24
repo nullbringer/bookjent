@@ -450,12 +450,12 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 						}]; */
 						
 						returnContext = [{
-							"name":"has-time".
+							"name":"has-time",
 							"lifespan":5,
 							"parameters":
 								{
 								  "date":selectedTime,
-								  "time":"";
+								  "time":""
 								}
 						}];
 						
@@ -478,12 +478,12 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
                         }]; */
 						
 						returnContext = [{
-							"name":"has-date".
+							"name":"has-date",
 							"lifespan":5,
 							"parameters":
 								{
 								  "date":selectedDate,
-								  "time":selectedTime;
+								  "time":selectedTime
 								}
 						}];
 						
@@ -516,12 +516,12 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 								}];*/
 								
 								returnContext = [{
-									"name":"has-date-time".
+									"name":"has-date-time",
 									"lifespan":5,
 									"parameters":
 									{
 										"date":selectedDate,
-										"time":selectedTime;
+										"time":selectedTime
 									}
 								}];
 								
@@ -549,12 +549,12 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 							}
 							else {
 								returnContext = [{
-									"name":"has-date".
+									"name":"has-date",
 									"lifespan":5,
 									"parameters":
 									{
 										"date":selectedDate,
-										"time":selectedTime;
+										"time":selectedTime
 									}
 								}];
 								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '.😣 Please suggest a different time.'; 
