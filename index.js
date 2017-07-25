@@ -230,7 +230,7 @@ app.post('/hook', function (req, res) {
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
 					
-					var timeManager = requestBody.result.contexts.filter(function(context){
+		    var timeManager = requestBody.result.contexts.filter(function(context){
                         return context.name === 'timeManager';
                     })[0];
                     
@@ -246,7 +246,7 @@ app.post('/hook', function (req, res) {
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
 					
-					var timeManager = requestBody.result.contexts.filter(function(context){
+		    var timeManager = requestBody.result.contexts.filter(function(context){
                         return context.name === 'timeManager';
                     })[0];
                     
@@ -388,8 +388,8 @@ app.post('/getMeetingForDoctor', function (req, res) {
 
 function getDepartmentNameByCode(deptcode){
      var department = departments.filter(function(dept){
-                        return (dept.value === deptcode);
-                    })[0].title;
+				return (dept.value === deptcode);
+    			})[0].title;
     return department;
     
 }
@@ -478,19 +478,19 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 						}];
 			}*/
 			
-			returnContext = [{ 
-							"name":"timeManager", 
-							"lifespan":2, 
-							"parameters":{
-								"date":selectedDate || selectedDateFromContext,
-								"time":selectedTime || selectedTimeFromContext
-							}
-						}];
+	    returnContext = [{ 
+					"name":"timeManager", 
+					"lifespan":2, 
+					"parameters":{
+						"date":selectedDate || selectedDateFromContext,
+						"time":selectedTime || selectedTimeFromContext
+					}
+	    }];
 
             if(timeManager.parameters.date && timeManager.parameters.time){
 				
 				selectedDate = selectedDate || timeManager.parameters.date;
-			    selectedTime = selectedTime || timeManager.parameters.time;
+			    	selectedTime = selectedTime || timeManager.parameters.time;
 				
 				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);						
 				var startDate = new Date(selectedDate);
@@ -723,28 +723,27 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime; */
 	  
     var selectedDate = preselectedDepartmentContext.parameters.date;
-	var selectedTime = preselectedDepartmentContext.parameters.time;
+    var selectedTime = preselectedDepartmentContext.parameters.time;
 			
 			
-	if(timeManager!== null)
-	{
+    if(timeManager!== null)
+    {
 		var selectedDateFromContext = timeManager.parameters.date;
 		var selectedTimeFromContext = timeManager.parameters.time;
-		
-	}
+    }
+
 	
-	
-	returnContext = [{ 
-							"name":"timeManager", 
-							"lifespan":2, 
-							"parameters":{
-								"date":selectedDate || selectedDateFromContext,
-								"time":selectedTime || selectedTimeFromContext
-							}
-					}];
+    returnContext = [{ 
+				"name":"timeManager", 
+				"lifespan":2, 
+				"parameters":{
+					"date":selectedDate || selectedDateFromContext,
+					"time":selectedTime || selectedTimeFromContext
+				}
+		    }];
 					
     selectedDate = selectedDate || timeManager.parameters.date;
-	selectedTime = selectedTime || timeManager.parameters.time;
+    selectedTime = selectedTime || timeManager.parameters.time;
 
     var timeArr = selectedTime.split(':');
     var dateTime = moment(selectedDate);
@@ -852,14 +851,14 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                     "lifespan":0, 
                     "parameters":{}
                 },
-				{
-					"name":"timeManager", 
-					"lifespan":2, 
-					"parameters":{
-								"date":selectedDate || selectedDateFromContext,
-								"time":selectedTime || selectedTimeFromContext
-							}
-				}
+		{
+			"name":"timeManager", 
+			"lifespan":2, 
+			"parameters":{
+						"date":selectedDate || selectedDateFromContext,
+						"time":selectedTime || selectedTimeFromContext
+					}
+		}
                             
             ];
         
