@@ -468,7 +468,16 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
             console.log("selectedDate:: "+selectedDate);
             console.log("selectedTime:: "+selectedTime);
 			
-			
+			returnContext.push(
+                { 
+                    "name":"timeManager", 
+                    "lifespan":0, 
+                    "parameters":{}
+                }
+            );
+            
+            
+            
             returnContext.push(
                 { 
                     "name":"timeManager", 
