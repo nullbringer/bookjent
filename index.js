@@ -229,12 +229,12 @@ app.post('/hook', function (req, res) {
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
-					
-		    var timeManager = requestBody.result.contexts.filter(function(context){
+
+                    var timeManager = requestBody.result.contexts.filter(function(context){
                         return context.name === 'timeManager';
                     })[0];
                     
-                    chooseDoctor(preselectedDepartmentContext,res,rootUrl);
+                    chooseDoctor(preselectedDepartmentContext,timeManager,res,rootUrl);
                     
                     break;
                     
@@ -403,7 +403,7 @@ function getDoctorByCode(docCode){
     
 }
 
-function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
+function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
     
     var speech = '';
     var returnContext = [];
@@ -435,7 +435,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
             var selectedTime = preselectedDepartmentContext.parameters.time;
 			
 			
-			if(timeManager!== null)
+			if(timeManager)
 			{
 				var selectedDateFromContext = timeManager.parameters.date;
 				var selectedTimeFromContext = timeManager.parameters.time;
@@ -613,7 +613,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
                 speech = 'Sure! What is the best time that will work for you?';
                 
-                //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
+               
 				
 				callback(res,speech,returnContext,customData);
 
@@ -627,7 +627,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
                 speech = 'Okay. On which date should I book the appointment?';
                 
-                //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
+                
 				
 				callback(res,speech,returnContext,customData);
 
@@ -640,7 +640,7 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
 
                 speech = 'Okay. When do you want to book the appointment with ' + selectedDoctor.title + '?';
                 
-                //customData = setCustomDataForChooseDoctor(selectedDoctor,rootUrl);
+            
 				 
 				callback(res,speech,returnContext,customData);
             }
@@ -677,41 +677,6 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
     
 }
 
-/*function setCustomDataForChooseDoctor(selectedDoctor, rootUrl){
-    
-    
-    var  customData = {
-        "facebook": {
-            "attachment":{
-              "type":"template",
-              "payload":{
-                "template_type":"generic",
-                "elements":[
-                   {
-                    "title":selectedDoctor.title,
-                    "image_url":rootUrl + "/images/"+ selectedDoctor.image,
-                    "subtitle":"What is the best time that will work for you?",
-
-                    "buttons":[
-                      {
-                        "type":"web_url",
-                        "url":"https://xxx.xxx",
-                        "title":"View Portfolio"
-                      }              
-                    ]      
-                  }
-                ]
-              }
-            }                                                                       
-        }
-    };
-    
-    return customData;
-    
-    
-    
-}*/
-
 
 function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     
@@ -719,14 +684,12 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     var returnContext = [];
     var customData = [];
     
-    /* var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-    var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime; */
 	  
     var selectedDate = preselectedDepartmentContext.parameters.date;
     var selectedTime = preselectedDepartmentContext.parameters.time;
 			
 			
-    if(timeManager!== null)
+    if(timeManager)
     {
 		var selectedDateFromContext = timeManager.parameters.date;
 		var selectedTimeFromContext = timeManager.parameters.time;
