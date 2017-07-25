@@ -229,6 +229,10 @@ app.post('/hook', function (req, res) {
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
+					
+		    var timeManager = requestBody.result.contexts.filter(function(context){
+                        return context.name === 'timeManager';
+                    })[0];
                     
                     chooseDoctor(preselectedDepartmentContext,res,rootUrl);
                     
@@ -240,6 +244,10 @@ app.post('/hook', function (req, res) {
                                         
                     var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
                         return context.name === 'getdoctorsbydepartment-followup';
+                    })[0];
+					
+		    var timeManager = requestBody.result.contexts.filter(function(context){
+                        return context.name === 'timeManager';
                     })[0];
                     
                     insertMeeting(preselectedDepartmentContext,res,rootUrl);                   
@@ -380,8 +388,8 @@ app.post('/getMeetingForDoctor', function (req, res) {
 
 function getDepartmentNameByCode(deptcode){
      var department = departments.filter(function(dept){
-                        return (dept.value === deptcode);
-                    })[0].title;
+				return (dept.value === deptcode);
+    			})[0].title;
     return department;
     
 }
@@ -423,14 +431,68 @@ function chooseDoctor(preselectedDepartmentContext, res,rootUrl){
         if (departmentOfDoctorCode === preselectedDepartmentContext.parameters.department) {
 
             
-            var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-            var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+            var selectedDate = preselectedDepartmentContext.parameters.date;
+            var selectedTime = preselectedDepartmentContext.parameters.time;
+			
+			
+			if(timeManager!== null)
+			{
+				var selectedDateFromContext = timeManager.parameters.date;
+				var selectedTimeFromContext = timeManager.parameters.time;
+				
+			}
+			
+			/*if(selectedDate !== "" && selectedTime === "")
+			{
+				timeManager = [{ 
+							"name":"timeManager", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDate,
+								"time":selectedTimeFromOldContext
+							}
+						}];
+			}
+			
+			if(selectedDate === "" && selectedTime !== "" )
+			{
+				timeManager = [{ 
+							"name":"timeManager", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDateFromOldContext,
+								"time":selectedTime
+							}
+						}];
+			}
+			
+			if(selectedDate === "" && selectedTime === "" )
+			{
+				timeManager = [{ 
+							"name":"timeManager", 
+							"lifespan":2, 
+							"parameters":{
+								"date":selectedDateFromOldContext,
+								"time":selectedTimeFromOldContext
+							}
+						}];
+			}*/
+			
+	    returnContext = [{ 
+					"name":"timeManager", 
+					"lifespan":2, 
+					"parameters":{
+						"date":selectedDate || selectedDateFromContext,
+						"time":selectedTime || selectedTimeFromContext
+					}
+	    }];
 
-
-            if(selectedDate && selectedTime){
+            if(timeManager.parameters.date && timeManager.parameters.time){
+				
+				selectedDate = selectedDate || timeManager.parameters.date;
+			    	selectedTime = selectedTime || timeManager.parameters.time;
 				
 				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);						
-
 				var startDate = new Date(selectedDate);
 
 				if( meetingStartDateTime.isAfter(new Date())) {
@@ -657,11 +719,35 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
     var returnContext = [];
     var customData = [];
     
-    var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
-    var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime;
+    /* var selectedDate = preselectedDepartmentContext.parameters.date_latest || preselectedDepartmentContext.parameters.date || preselectedDepartmentContext.parameters.deptDate;
+    var selectedTime = preselectedDepartmentContext.parameters.time_latest || preselectedDepartmentContext.parameters.time || preselectedDepartmentContext.parameters.deptTime; */
+	  
+    var selectedDate = preselectedDepartmentContext.parameters.date;
+    var selectedTime = preselectedDepartmentContext.parameters.time;
+			
+			
+    if(timeManager!== null)
+    {
+		var selectedDateFromContext = timeManager.parameters.date;
+		var selectedTimeFromContext = timeManager.parameters.time;
+    }
+
+	
+    returnContext = [{ 
+				"name":"timeManager", 
+				"lifespan":2, 
+				"parameters":{
+					"date":selectedDate || selectedDateFromContext,
+					"time":selectedTime || selectedTimeFromContext
+				}
+		    }];
+					
+    selectedDate = selectedDate || timeManager.parameters.date;
+    selectedTime = selectedTime || timeManager.parameters.time;
 
     var timeArr = selectedTime.split(':');
     var dateTime = moment(selectedDate);
+	
     dateTime = dateTime.set({
        'hour' : timeArr[0],
        'minute'  : timeArr[1],
@@ -764,7 +850,15 @@ function insertMeeting(preselectedDepartmentContext, res,rootUrl){
                     "name":"choosedoctor-followup", 
                     "lifespan":0, 
                     "parameters":{}
-                }
+                },
+		{
+			"name":"timeManager", 
+			"lifespan":2, 
+			"parameters":{
+						"date":selectedDate || selectedDateFromContext,
+						"time":selectedTime || selectedTimeFromContext
+					}
+		}
                             
             ];
         
