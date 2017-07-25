@@ -194,7 +194,12 @@ app.post('/hook', function (req, res) {
                         });    
                         
                         
+                        /* facebook specific ends */     
                         
+                        
+                        var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
+                            return context.name === 'getdoctorsbydepartment-followup';
+                        })[0];
                         
                         
                         var timeManagerInList = requestBody.result.contexts.filter(function(context){
@@ -204,21 +209,27 @@ app.post('/hook', function (req, res) {
                         var timeManager = timeManagerInList ? timeManagerInList[0]:[];
                         
                         
-                  /*       returnContext = [{ 
-                                "name":"timeManager", 
-                                "lifespan":2, 
-                                "parameters":{
-                                "date":selectedDate,
-                                "time":selectedTime
-                            }
-                        }];*/
                         
-                        
-                        
-                        
-                        
-                       
+                        var selectedDate = preselectedDepartmentContext.parameters.date;
+                        var selectedTime = preselectedDepartmentContext.parameters.time;
+
+
+                        if(timeManager)
+                        {
+                            selectedDate = selectedDate || timeManager.parameters.date;
+                            selectedTime = selectedTime || timeManager.parameters.time;
+
+                        }
                                                 
+                        
+                         returnContext = [{ 
+                                "name":"timeManager", 
+                                "lifespan":5, 
+                                "parameters":{
+                                    "date":selectedDate,
+                                    "time":selectedTime
+                                }
+                        }];                                                
 
                     } else {
                         speech = 'No doctors are available for ' + requestedDepartment[0].title;
@@ -454,14 +465,16 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			}
 			
 			
-            returnContext = [{ 
+            returnContext.push(
+                { 
                     "name":"timeManager", 
-                    "lifespan":2, 
+                    "lifespan":5, 
                     "parameters":{
-                    "date":selectedDate,
-                    "time":selectedTime
+                        "date":selectedDate,
+                        "time":selectedTime
+                    }
                 }
-            }];
+            );
 
             if(selectedDate && selectedTime){				
               
@@ -477,11 +490,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
                         
                         //if weekend
                         
-                        returnContext = [{ 
-							"name":"has-time", 
-							"lifespan":2, 
-							"parameters":{}
-						}];
+                        returnContext.push(
+                            { 
+                                "name":"has-time", 
+                                "lifespan":2, 
+                                "parameters":{}
+                            }
+                        );
 						speech = 'Hey! No service on weekends! Please choose a weekday!';
 						
 						callback(res,speech,returnContext,customData);
@@ -494,11 +509,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
                         
                         //if out of office hour
 
-                        returnContext = [{ 
-                            "name":"has-date", 
-                            "lifespan":2, 
-                            "parameters":{}
-                        }];
+                         returnContext.push(
+                            { 
+                                "name":"has-date", 
+                                "lifespan":2, 
+                                "parameters":{}
+                            }
+                        );
                         speech = 'We are available 10am - 6pm only. Please book time in business hours only.';
 
                         callback(res,speech,returnContext,customData);
@@ -521,11 +538,14 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 						db.collection('meeting_default').find(condition).count().then(function(numOfConfictMeetings) {
 							//console.log('numOfConfictMeetings:'+numOfConfictMeetings);
 							if(numOfConfictMeetings === 0) {
-								returnContext = [{
-								"name":"has-date-time", 
-								"lifespan":2, 
-								"parameters":{}
-								}];
+                                returnContext.push(
+                                    {
+                                        "name":"has-date-time", 
+                                        "lifespan":2, 
+                                        "parameters":{}
+                                    }                                
+                                );
+                                
 								speech = 'Booking appointment with ' + selectedDoctor.title + ' on '+ meetingStartDateTime.format("MMMM Do, h:mm a") + '. Do you confirm?';	
 								
 								var customData = {
@@ -549,11 +569,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 								callback(res,speech,returnContext,customData);
 							}
 							else {
-								returnContext = [{ 
-								"name":"has-date", 
-								"lifespan":2, 
-								"parameters":{}
-								}];
+								returnContext.push(
+                                    {
+                                        "name":"has-date", 
+                                        "lifespan":2, 
+                                        "parameters":{}
+                                    }                                
+                                );
 								speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '.😣 Please suggest a different time.'; 
 								
 								callback(res,speech,returnContext,customData);
@@ -565,11 +587,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 				}		
 				else
 				{
-					returnContext = [{ 
-						"name":"has-nothing", 
-						"lifespan":2, 
-						"parameters":{}
-					}];
+					returnContext.push(
+                        {
+                            "name":"has-nothing", 
+                            "lifespan":2, 
+                            "parameters":{}
+                        }                                
+                    );
 					speech = 'We do not heal the past by dwelling there! 😜 \nPlease select a date in future';
 					
 					callback(res,speech,returnContext,customData);
@@ -579,11 +603,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 
 			} else if(selectedDate) {
 				
-                returnContext = [{
-                    "name":"has-date", 
-                    "lifespan":2, 
-                    "parameters":{}
-                }];
+                returnContext.push(
+                    {
+                        "name":"has-date", 
+                        "lifespan":2, 
+                        "parameters":{}
+                    }                                
+                );
 
                 speech = 'Sure! What is the best time that will work for you?';
                 
@@ -593,11 +619,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 
             } else if(selectedTime) {
 				
-                returnContext = [{
-                    "name":"has-time", 
-                    "lifespan":2, 
-                    "parameters":{}
-                }];
+                returnContext.push(
+                    {
+                        "name":"has-time", 
+                        "lifespan":2, 
+                        "parameters":{}
+                    }                                
+                );
 
                 speech = 'Okay. On which date should I book the appointment?';
                 
@@ -606,11 +634,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 				callback(res,speech,returnContext,customData);
 
             } else {
-                returnContext = [{
-                    "name":"has-nothing", 
-                    "lifespan":2, 
-                    "parameters":{}
-                }];
+                 returnContext.push(
+                    {
+                        "name":"has-nothing", 
+                        "lifespan":2, 
+                        "parameters":{}
+                    }                                
+                );
 
                 speech = 'Okay. When do you want to book the appointment with ' + selectedDoctor.title + '?';
                 
@@ -669,15 +699,6 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
 		var selectedTimeFromContext = timeManager.parameters.time;
     }
 
-	
-    returnContext = [{ 
-				"name":"timeManager", 
-				"lifespan":2, 
-				"parameters":{
-					"date":selectedDate || selectedDateFromContext,
-					"time":selectedTime || selectedTimeFromContext
-				}
-		    }];
 					
     selectedDate = selectedDate || timeManager.parameters.date;
     selectedTime = selectedTime || timeManager.parameters.time;
@@ -788,20 +809,13 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
                     "lifespan":0, 
                     "parameters":{}
                 },
-		{
-			"name":"timeManager", 
-			"lifespan":2, 
-			"parameters":{
-						"date":selectedDate || selectedDateFromContext,
-						"time":selectedTime || selectedTimeFromContext
-					}
-		}
+                {
+                    "name":"timeManager", 
+                    "lifespan":0, 
+                    "parameters":{}
+                }
                             
-            ];
-        
-        
-        
-        
+            ];        
         
         callback(res,speech,returnContext,customData);
     });
