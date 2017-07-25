@@ -437,8 +437,8 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			
 			if(timeManager)
 			{
-				var selectedDateFromContext = timeManager.parameters.date;
-				var selectedTimeFromContext = timeManager.parameters.time;
+				selectedDate = selectedDate || timeManager.parameters.date;
+				selectedTime = selectedTime || timeManager.parameters.time;
 				
 			}
 			
@@ -478,22 +478,20 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 						}];
 			}*/
 			
-	    returnContext = [{ 
-					"name":"timeManager", 
-					"lifespan":2, 
-					"parameters":{
-						"date":selectedDate || selectedDateFromContext,
-						"time":selectedTime || selectedTimeFromContext
-					}
-	    }];
+            returnContext = [{ 
+                    "name":"timeManager", 
+                    "lifespan":2, 
+                    "parameters":{
+                    "date":selectedDate,
+                    "time":selectedTime
+                }
+            }];
 
-            if(timeManager.parameters.date && timeManager.parameters.time){
-				
-				selectedDate = selectedDate || timeManager.parameters.date;
-			    	selectedTime = selectedTime || timeManager.parameters.time;
-				
-				var meetingStartDateTime = moment(selectedDate + " " + selectedTime);						
-				var startDate = new Date(selectedDate);
+            if(selectedDate && selectedTime){				
+              
+
+                var meetingStartDateTime = moment(selectedDate + " " + selectedTime);						
+                var startDate = new Date(selectedDate);
 
 				if( meetingStartDateTime.isAfter(new Date())) {
                     
