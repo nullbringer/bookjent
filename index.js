@@ -459,9 +459,8 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			
 			if(timeManager)
 			{
-                console.log("iside id::******");
-				selectedDate = selectedDate || timeManager.parameters.date;
-				selectedTime = selectedTime || timeManager.parameters.time;
+				selectedDate = selectedDate?  selectedDate : timeManager.parameters.date;
+				selectedTime = selectedTime? selectedTime : timeManager.parameters.time;
 				
 			}
             
@@ -475,7 +474,7 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
                     "name":"time-manager", 
                     "lifespan":5, 
                     "parameters":{
-                        "date":"2017-05-03",
+                        "date":selectedDate,
                         "time":selectedTime
                     }
                 }
