@@ -203,7 +203,7 @@ app.post('/hook', function (req, res) {
                         
                         
                         var timeManagerInList = requestBody.result.contexts.filter(function(context){
-                            return context.name === 'timeManager';
+                            return context.name === 'time-manager';
                         });
                         
                         var timeManager = timeManagerInList ? timeManagerInList[0]:[];
@@ -223,7 +223,7 @@ app.post('/hook', function (req, res) {
                                                 
                         
                          returnContext = [{ 
-                                "name":"timeManager", 
+                                "name":"time-manager", 
                                 "lifespan":5, 
                                 "parameters":{
                                     "date":selectedDate,
@@ -253,7 +253,7 @@ app.post('/hook', function (req, res) {
                     })[0];
 
                     var timeManager = requestBody.result.contexts.filter(function(context){
-                        return context.name === 'timeManager';
+                        return context.name === 'time-manager';
                     })[0];
                     
                     chooseDoctor(preselectedDepartmentContext,timeManager,res,rootUrl);
@@ -269,7 +269,7 @@ app.post('/hook', function (req, res) {
                     })[0];
 					
                     var timeManager = requestBody.result.contexts.filter(function(context){
-                        return context.name === 'timeManager';
+                        return context.name === 'time-manager';
                     })[0];
                     
                     insertMeeting(preselectedDepartmentContext, timeManager, res, rootUrl);                   
@@ -471,7 +471,7 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			
             returnContext.push(
                 { 
-                    "name":"timeManager", 
+                    "name":"time-manager", 
                     "lifespan":5, 
                     "parameters":{
                         "date":selectedDate,
