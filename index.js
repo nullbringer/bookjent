@@ -459,14 +459,20 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			
 			if(timeManager)
 			{
-				selectedDate = selectedDate?  selectedDate : timeManager.parameters.date;
-				selectedTime = selectedTime? selectedTime : timeManager.parameters.time;
+                console.log("selectedDate:: "+selectedDate);
+            console.log("timeManager.parameters.date:: "+timeManager.parameters.date);
+                
+                
+				selectedDate = selectedDate || timeManager.parameters.date;
+				selectedTime = selectedTime || timeManager.parameters.time;
+                
+                
+                
 				
 			}
             
             
-            console.log("selectedDate:: "+selectedDate);
-            console.log("selectedTime:: "+selectedTime);
+            
 			
 			
             returnContext.push(
