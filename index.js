@@ -216,8 +216,8 @@ app.post('/hook', function (req, res) {
 
                         if(timeManager)
                         {
-                            selectedDate = selectedDate || timeManager.parameters.date;
-                            selectedTime = selectedTime || timeManager.parameters.time;
+                            selectedDate = selectedDate || timeManager.parameters.stack_date;
+                            selectedTime = selectedTime || timeManager.parameters.stack_time;
 
                         }
                                                 
@@ -226,8 +226,8 @@ app.post('/hook', function (req, res) {
                                 "name":"time-manager", 
                                 "lifespan":5, 
                                 "parameters":{
-                                    "date":selectedDate,
-                                    "time":selectedTime
+                                    "stack_date":selectedDate,
+                                    "stack_time":selectedTime
                                 }
                         }];                                                
 
@@ -460,11 +460,11 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			if(timeManager)
 			{
                 console.log("selectedDate:: "+selectedDate);
-            console.log("timeManager.parameters.date:: "+timeManager.parameters.date);
+            console.log("timeManager.parameters.date:: "+timeManager.parameters.stack_date);
                 
                 
-				selectedDate = selectedDate || timeManager.parameters.date;
-				selectedTime = selectedTime || timeManager.parameters.time;
+				selectedDate = selectedDate || timeManager.parameters.stack_date;
+				selectedTime = selectedTime || timeManager.parameters.stack_time;
                 
                 
                 
@@ -480,8 +480,8 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
                     "name":"time-manager", 
                     "lifespan":5, 
                     "parameters":{
-                        "date":selectedDate,
-                        "time":selectedTime
+                        "stack_date":selectedDate,
+                        "stack_time":selectedTime
                     }
                 }
             );
@@ -705,13 +705,13 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
 			
     if(timeManager)
     {
-		var selectedDateFromContext = timeManager.parameters.date;
-		var selectedTimeFromContext = timeManager.parameters.time;
+		var selectedDateFromContext = timeManager.parameters.stack_date;
+		var selectedTimeFromContext = timeManager.parameters.stack_time;
     }
 
 					
-    selectedDate = selectedDate || timeManager.parameters.date;
-    selectedTime = selectedTime || timeManager.parameters.time;
+    selectedDate = selectedDate || timeManager.parameters.stack_date;
+    selectedTime = selectedTime || timeManager.parameters.stack_time;
 
     var timeArr = selectedTime.split(':');
     var dateTime = moment(selectedDate);
@@ -820,7 +820,7 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
                     "parameters":{}
                 },
                 {
-                    "name":"timeManager", 
+                    "name":"time-manager", 
                     "lifespan":0, 
                     "parameters":{}
                 }
