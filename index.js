@@ -475,7 +475,7 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
                     "name":"time-manager", 
                     "lifespan":5, 
                     "parameters":{
-                        "date":selectedDate,
+                        "date":"2017-05-03",
                         "time":selectedTime
                     }
                 }
