@@ -705,23 +705,12 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
 			
     if(timeManager)
     {
-		var selectedDateFromContext = timeManager.parameters.stack_date;
-		var selectedTimeFromContext = timeManager.parameters.stack_time;
-    }
+		selectedDate = selectedDate || timeManager.parameters.stack_date;
+        selectedTime = selectedTime || timeManager.parameters.stack_time;
+    }					
+    
 
-					
-    selectedDate = selectedDate || timeManager.parameters.stack_date;
-    selectedTime = selectedTime || timeManager.parameters.stack_time;
-
-    var timeArr = selectedTime.split(':');
-    var dateTime = moment(selectedDate);
-	
-    dateTime = dateTime.set({
-       'hour' : timeArr[0],
-       'minute'  : timeArr[1],
-       'second' : timeArr[2]
-    });
-
+    var dateTime = moment(selectedDate + " " + selectedTime);			    
 
     var newMeeting = {
         "doctor_name": preselectedDepartmentContext.parameters['dept-doctors'],
