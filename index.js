@@ -459,6 +459,7 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 			
 			if(timeManager)
 			{
+                console.log("iside id::******");
 				selectedDate = selectedDate || timeManager.parameters.date;
 				selectedTime = selectedTime || timeManager.parameters.time;
 				
