@@ -141,6 +141,7 @@ app.post('/hook', function (req, res) {
 
                     var doctorNames = [];
                     var doctorObjList = [];
+                    
                     doctorForDept.forEach(function(doc){
                         doctorObjList.push(doc);
                         doctorNames.push(doc.title);
@@ -151,21 +152,7 @@ app.post('/hook', function (req, res) {
 
                         speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
                         
-                        /* facebook specific starts */
-                        
-                       /* customData = {
-                            "facebook": {
-                                "text": 'Available doctors from ' + requestedDepartment[0].title + ' department are:\n '+
-                                        '---------- \n'                                                                        
-                              }
-                        };
-                        
-                        
-                        doctorNames.forEach(function(docNanme){
-                            customData.facebook.text += docNanme + '\n';                            
-
-                        });*/      
-                                                
+                        /* facebook specific starts */                                                
                         
                         var  customData = {
                             "facebook": [                                
@@ -204,9 +191,33 @@ app.post('/hook', function (req, res) {
                             
                             customData.facebook[1].attachment.payload.elements.push(el);                       
 
+                        });    
+                        
+                        
+                        
+                        
+                        
+                        var timeManagerInList = requestBody.result.contexts.filter(function(context){
+                            return context.name === 'timeManager';
                         });
-                                                
-                        /* facebook specific starts */
+                        
+                        var timeManager = timeManagerInList ? timeManagerInList[0]:[];
+                        
+                        
+                  /*       returnContext = [{ 
+                                "name":"timeManager", 
+                                "lifespan":2, 
+                                "parameters":{
+                                "date":selectedDate,
+                                "time":selectedTime
+                            }
+                        }];*/
+                        
+                        
+                        
+                        
+                        
+                       
                                                 
 
                     } else {
@@ -246,11 +257,11 @@ app.post('/hook', function (req, res) {
                         return context.name === 'getdoctorsbydepartment-followup';
                     })[0];
 					
-		    var timeManager = requestBody.result.contexts.filter(function(context){
+                    var timeManager = requestBody.result.contexts.filter(function(context){
                         return context.name === 'timeManager';
                     })[0];
                     
-                    insertMeeting(preselectedDepartmentContext,res,rootUrl);                   
+                    insertMeeting(preselectedDepartmentContext, timeManager, res, rootUrl);                   
                                         
                     
                     break;
@@ -442,41 +453,6 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 				
 			}
 			
-			/*if(selectedDate !== "" && selectedTime === "")
-			{
-				timeManager = [{ 
-							"name":"timeManager", 
-							"lifespan":2, 
-							"parameters":{
-								"date":selectedDate,
-								"time":selectedTimeFromOldContext
-							}
-						}];
-			}
-			
-			if(selectedDate === "" && selectedTime !== "" )
-			{
-				timeManager = [{ 
-							"name":"timeManager", 
-							"lifespan":2, 
-							"parameters":{
-								"date":selectedDateFromOldContext,
-								"time":selectedTime
-							}
-						}];
-			}
-			
-			if(selectedDate === "" && selectedTime === "" )
-			{
-				timeManager = [{ 
-							"name":"timeManager", 
-							"lifespan":2, 
-							"parameters":{
-								"date":selectedDateFromOldContext,
-								"time":selectedTimeFromOldContext
-							}
-						}];
-			}*/
 			
             returnContext = [{ 
                     "name":"timeManager", 
@@ -676,7 +652,7 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 }
 
 
-function insertMeeting(preselectedDepartmentContext, res,rootUrl){
+function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
     
     var speech = '';
     var returnContext = [];
