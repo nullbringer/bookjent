@@ -463,6 +463,10 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 				selectedTime = selectedTime || timeManager.parameters.time;
 				
 			}
+            
+            
+            console.log("selectedDate:: "+selectedDate);
+            console.log("selectedTime:: "+selectedTime);
 			
 			
             returnContext.push(
