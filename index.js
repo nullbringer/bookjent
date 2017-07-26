@@ -8,14 +8,18 @@ const moment = require('moment');
 
 
 const settings = JSON.parse(fs.readFileSync('data/settings.json', 'utf8'));
-const departments = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'));
-const doctors = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
+const masterDepartmentList = JSON.parse(fs.readFileSync('data/departments.json', 'utf8'));
+const masterDoctorList = JSON.parse(fs.readFileSync('data/doctors.json', 'utf8'));
 var ObjectID = mongodb.ObjectID;
 const MEETING_COLLECTION = 'meeting_default';
 
 
 //var apiai = require("./module/apiai");
 //var app = apiai(settings.accessToken);
+var welcomeModule = require('./module/welcome.js');
+var defaultFallbackModule = require('./module/default_fallback.js');
+var chooseDepartmentModule = require('./module/choose_department.js');
+var helper = require('./module/helper.js');
 
 const app = express();
 
@@ -71,53 +75,16 @@ app.post('/hook', function (req, res) {
             switch(requestBody.result.action){
                     
                 case 'input.welcome':
-                    console.log('Fired: input.welcome');
-                    speech = 'Hi there!'
                     
-                    
-                    /* facebook specific starts */
-
-                    customData = {
-                        "facebook": {
-                            "text": "Hi there! I'm Eve 💁 your friendly booking guide. Choose a department to proceed: \n"+
-                                    "-------------- \n"                                                                
-                          }
-                    };
-
-                    
-                    departments.forEach(function(dept){
-                        customData.facebook.text += dept.title + '\n';          
-                        
-                    });
-                    
-                    
-                    callback(res,speech,returnContext,customData);
+                    console.log('Fired: input.welcome');                    
+                    welcomeModule.sayHello(res,callback);
                     
                     break;
                     
                     
                 case 'input.unknown':
                     console.log('Fired: input.unknown');
-                    speech = "I'm afraid I don't understand.";
-                    
-                    
-                    /* facebook specific starts */
-
-                    customData = {
-                        "facebook": {
-                            "text": "I'm afraid I don't understand! If you want to book an appointment, choose a department to proceed: \n"+
-                                    "-------------- \n"                                                                       
-                          }
-                    };
-
-                    
-                    departments.forEach(function(dept){
-                        customData.facebook.text += dept.title + '\n';          
-                        
-                    });
-                    
-                    
-                    callback(res,speech,returnContext,customData);
+                    defaultFallbackModule.showFallback(res,callback);
                     
                     break;
                     
@@ -128,114 +95,7 @@ app.post('/hook', function (req, res) {
                     
                     console.log('Fired: search.doctorsByDepartment');
             
-                    
-
-                    var requestedDepartment = departments.filter(function(dept){
-                        return (dept.value === requestBody.result.parameters.department);
-                    });
-
-
-                    var doctorForDept = doctors.filter(function(doc){
-                        return (doc.department === requestBody.result.parameters.department);
-                    });   
-
-                    var doctorNames = [];
-                    var doctorObjList = [];
-                    
-                    doctorForDept.forEach(function(doc){
-                        doctorObjList.push(doc);
-                        doctorNames.push(doc.title);
-
-                    });             
-
-                    if(doctorNames){
-
-                        speech = 'Available doctors from ' + requestedDepartment[0].title + ' department are: ' + doctorNames.join(','); 
-                        
-                        /* facebook specific starts */                                                
-                        
-                        var  customData = {
-                            "facebook": [                                
-                                {
-                                    "text": "Available doctors from " + requestedDepartment[0].title + " department are: "
-                                },                                
-                                {
-                                    "attachment":{
-                                      "type":"template",
-                                      "payload":{
-                                        "template_type":"generic",
-                                        "elements":[
-
-                                        ]
-                                      }
-                                    }                                                                       
-                                }]
-                        };
-                        
-                        
-                        doctorObjList.forEach(function(doc){                           
-                            
-                            var el = {
-                                "title":doc.title,
-                                "image_url":rootUrl + "/images/"+ doc.image,
-                                "subtitle":getDepartmentNameByCode(doc.department),
-
-                                "buttons":[
-                                  {
-                                    "type":"postback",
-                                    "title":"Choose " + doc.title,
-                                    "payload":doc.title
-                                  }              
-                                ]      
-                              };
-                            
-                            customData.facebook[1].attachment.payload.elements.push(el);                       
-
-                        });    
-                        
-                        
-                        /* facebook specific ends */     
-                        
-                        
-                        var preselectedDepartmentContext = requestBody.result.contexts.filter(function(context){
-                            return context.name === 'getdoctorsbydepartment-followup';
-                        })[0];
-                        
-                        
-                        var timeManagerInList = requestBody.result.contexts.filter(function(context){
-                            return context.name === 'time-manager';
-                        });
-                        
-                        var timeManager = timeManagerInList ? timeManagerInList[0]:[];
-                        
-                        
-                        
-                        var selectedDate = preselectedDepartmentContext.parameters.date;
-                        var selectedTime = preselectedDepartmentContext.parameters.time;
-
-
-                        if(timeManager)
-                        {
-                            selectedDate = selectedDate || timeManager.parameters.stack_date;
-                            selectedTime = selectedTime || timeManager.parameters.stack_time;
-
-                        }
-                                                
-                        
-                         returnContext = [{ 
-                                "name":"time-manager", 
-                                "lifespan":5, 
-                                "parameters":{
-                                    "stack_date":selectedDate,
-                                    "stack_time":selectedTime
-                                }
-                        }];                                                
-
-                    } else {
-                        speech = 'No doctors are available for ' + requestedDepartment[0].title;
-                    }  
-                    
-                    callback(res,speech,returnContext,customData);
+                    chooseDepartmentModule.getResponse(requestBody,rootUrl,res,callback);                    
                     
                     
                     break;
@@ -303,7 +163,7 @@ app.post('/getDoctors', function (req, res) {
         
         var payload ={};
         
-        doctors.forEach(function(doc){         
+        masterDoctorList.forEach(function(doc){         
              
             
             var docObj ={
@@ -408,22 +268,8 @@ app.post('/getMeetingForDoctor', function (req, res) {
 });
 
 
-function getDepartmentNameByCode(deptcode){
-     var department = departments.filter(function(dept){
-				return (dept.value === deptcode);
-    			})[0].title;
-    return department;
-    
-}
 
 
-function getDoctorByCode(docCode){
-     var doctor = doctors.filter(function(doc){
-                        return (doc.value === docCode);
-                    })[0];
-    return doctor;
-    
-}
 
 function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
     
@@ -436,13 +282,13 @@ function chooseDoctor(preselectedDepartmentContext,timeManager, res,rootUrl){
 
     var preselectedDeptValue = preselectedDepartmentContext.parameters.department;                    
 
-    var departmentWiseDoctorList = doctors.filter( function(doc) {
+    var departmentWiseDoctorList = masterDoctorList.filter( function(doc) {
         return doc.department === preselectedDeptValue;
     });
 
     var docTitles = [];	
 
-    var selectedDoctorList = doctors.filter( function(doc) {
+    var selectedDoctorList = masterDoctorList.filter( function(doc) {
         return (doc.value === doctorCode);
     });
 
@@ -744,8 +590,8 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
                             "template_type":"generic",
                             "elements":[
                                {
-                                "title":"Appointment booked with " + getDoctorByCode(newMeeting.doctor_name).title,
-                                "image_url":rootUrl + "/images/"+ getDoctorByCode(newMeeting.doctor_name).image,
+                                "title":"Appointment booked with " + helper.getDoctorByCode(newMeeting.doctor_name).title,
+                                "image_url":rootUrl + "/images/"+ helper.getDoctorByCode(newMeeting.doctor_name).image,
                                 "subtitle":"Time: " + moment(newMeeting.start_date_time).format("MMMM Do YYYY, h:mm a")                                   
                               }
                             ]
@@ -771,6 +617,8 @@ function insertMeeting(preselectedDepartmentContext, timeManager, res,rootUrl){
                 ]
             };
         
+        
+            //reset all context
         
             returnContext = [
                 {
