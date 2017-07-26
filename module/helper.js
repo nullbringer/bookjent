@@ -53,12 +53,8 @@ module.exports = {
         var filteredDoctorList = masterDoctorList.filter(function(doc){
             return (doc.department === dept);
         });
-        
-        if(filteredDoctorList.length){
-            return filteredDoctorList;
-        }
-        
-        return;
+                    
+        return filteredDoctorList;
     
     },
     

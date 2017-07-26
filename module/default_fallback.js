@@ -6,7 +6,7 @@ module.exports = {
     
     showFallback: function(res,callback) {
 
-        var  speech = '';
+        var speech = '';
         var returnContext = [];
         var customData = [];
 
