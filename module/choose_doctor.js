@@ -36,11 +36,7 @@ module.exports = {
         var selectedDoctor = helper.getDoctorByCode(doctorCode);
             
         
-        console.log(selectedDoctor);
-          
-
-       
-            
+                   
         if ( Object.keys(selectedDoctor).length > 0) {
             
 
@@ -92,7 +88,7 @@ module.exports = {
                             );
                             speech = 'Hey! No service on weekends! Please choose a weekday!';
 
-                            callback(res,speech,returnContext,customData);
+                            return callback(res,speech,returnContext,customData);
 
 
 
@@ -111,7 +107,7 @@ module.exports = {
                             );
                             speech = 'We are available 10am - 6pm only. Please book time in business hours only.';
 
-                            callback(res,speech,returnContext,customData);
+                           return callback(res,speech,returnContext,customData);
 
 
                         } else {
@@ -159,7 +155,7 @@ module.exports = {
                                                   }
                                                 };
 
-                                    callback(res,speech,returnContext,customData);
+                                    return callback(res,speech,returnContext,customData);
                                 }
                                 else {
                                     returnContext.push(
@@ -171,7 +167,7 @@ module.exports = {
                                     );
                                     speech = selectedDoctor.title + ' already booked on ' + meetingStartDateTime.format("MMMM Do, h:mm a") + '.😣 Please suggest a different time.'; 
 
-                                    callback(res,speech,returnContext,customData);
+                                    return callback(res,speech,returnContext,customData);
                                 }
                             });                        
 
@@ -182,14 +178,14 @@ module.exports = {
                     {
                         returnContext.push(
                             {
-                                "name":"has-nothing", 
+                                "name":"has-time", 
                                 "lifespan":2, 
                                 "parameters":{}
                             }                                
                         );
                         speech = 'We do not heal the past by dwelling there! 😜 \nPlease select a date in future';
 
-                        callback(res,speech,returnContext,customData);
+                        return callback(res,speech,returnContext,customData);
                     }
 
 
@@ -208,7 +204,7 @@ module.exports = {
 
 
 
-                    callback(res,speech,returnContext,customData);
+                    return callback(res,speech,returnContext,customData);
 
                 } else if(selectedTime) {
 
@@ -224,7 +220,7 @@ module.exports = {
 
 
 
-                    callback(res,speech,returnContext,customData);
+                    return callback(res,speech,returnContext,customData);
 
                 } else {
                      returnContext.push(
@@ -238,7 +234,7 @@ module.exports = {
                     speech = 'Okay. When do you want to book the appointment with ' + selectedDoctor.title + '?';
 
 
-                    callback(res,speech,returnContext,customData);
+                    return callback(res,speech,returnContext,customData);
                 }
 
 
@@ -257,7 +253,7 @@ module.exports = {
 
                 speech += docTitles.join(',');
 
-                callback(res,speech,returnContext,customData);
+                return callback(res,speech,returnContext,customData);
 
 
             }
@@ -273,7 +269,7 @@ module.exports = {
             }
             speech += docTitles.join(',');
 
-            callback(res,speech,returnContext,customData);
+            return callback(res,speech,returnContext,customData);
 
         }
         
