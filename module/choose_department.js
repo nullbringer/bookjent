@@ -101,7 +101,7 @@ module.exports = {
             speech = 'No doctors are available for ' + requestedDepartment.title;
         }  
 
-        callback(res,speech,returnContext,customData);
+        return callback(res,speech,returnContext,customData);
                     
 
     }

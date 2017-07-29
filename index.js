@@ -260,7 +260,7 @@ function callback(res,speech,returnContext,customData){
     console.log('Context');
     console.log('==================');
     console.log(returnContext);
-     console.log('customData');
+    console.log('customData');
     console.log('==================');
     console.log(customData);
     

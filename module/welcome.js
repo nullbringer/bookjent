@@ -27,7 +27,7 @@ module.exports = {
         });
 
 
-        callback(res,speech,returnContext,customData);
+        return callback(res,speech,returnContext,customData);
 
     }
 
