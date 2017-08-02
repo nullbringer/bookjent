@@ -15,7 +15,7 @@ module.exports = {
                     
         /* facebook specific starts */
 
-        customData = {
+/*        customData = {
             "facebook": {
                 "text": "I'm afraid I don't understand! If you want to book an appointment, choose a department to proceed: \n"+
                         "-------------- \n"                                                                       
@@ -26,7 +26,7 @@ module.exports = {
         masterDepartmentList.forEach(function(dept){
             customData.facebook.text += dept.title + '\n';          
 
-        });
+        });*/
 
 
         return callback(res,speech,returnContext,customData);
