@@ -195,7 +195,7 @@ app.post('/getMeetingForDoctor', function (req, res) {
        
         var query = {"doctor_name": req.body.name};
         
-          db.collection(MEETING_COLLECTION).find(query).toArray(function(err, meetings) {
+          db.collection('meeting_default').find(query).toArray(function(err, meetings) {
             if (err) {
               handleError(res, err.message, "Failed to get contact");
             } else {
