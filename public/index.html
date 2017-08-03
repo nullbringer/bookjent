@@ -86,33 +86,44 @@
     </script>
     <style>
 
-        body {
-	margin: 40px 10px;
-	padding: 0;
-	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-	font-size: 14px;
-        }
+    body {
+        margin: 40px 10px;
+        padding: 0;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
 
 	 #calendar {
-	 max-width: 900px;
-	 margin: 0 auto;
+        max-width: 900px;
+        margin-left: 100px;
+        margin: 0 30px 50px 90px;
+        float: left;
 	 }
 		
 	.main {
-	 width:100%; 
-	 overflow: hidden;
+        float: left;
 	 }
 	    
 	.select-area {
-	width: 200px;
-	margin: 0px auto 50px;
-	float:left;
-	margin-left:45%;
+        width: 200px;
+        margin: 0px auto 50px;
+        float:left;        
+        margin-left: 38%;
 	}
 		
 	#loader {
-	display: none;
-    	}
+        display: none;
+    }
+        
+    #apiaichatbox{
+        margin-left: 70px;
+        height: 600px;
+        width: 380px;
+        box-shadow: 0 19px 147px -41px rgba(0,0,0,.75);
+        border: 0;
+        float:left;
+       
+    }
 		
 		
 		
@@ -122,17 +133,31 @@
 <body>
    
 	<div class ="main">
-		<div class="select-area">
-            <select id="select-doctor">
-                <option value=""></option>
-            </select>     
-		</div>
-		<div class="loader-image">
-			<img id="loader" src="images/Rolling.gif">	
-		</div>
+        
+        
+        <div class="select-wrapper">
+            <div class="select-area">
+                <select id="select-doctor">
+                    <option value=""></option>
+                </select>     
+            </div>
+            <div class="loader-image">
+                <img id="loader" src="images/Rolling.gif">	
+            </div>
+        </div>
+        
+        
+         <iframe id="apiaichatbox" src="https://console.api.ai/api-client/demo/embedded/3ba6b07c-b2d8-4dd9-baca-1a506e28aa27"></iframe>
+        
+        
 	</div>
+    
+    
 
 	<div id='calendar'></div>
+    
+    
+   
 
 </body>
 </html>
