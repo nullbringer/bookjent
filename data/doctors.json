@@ -144,5 +144,18 @@
       "Parsons",
       "Parson"
     ]
+  },
+    {
+    "value": "DOC_GEN_13",
+    "department": "CDO",
+    "title": "Mike Hussy",
+    "image": "male2.png",
+    "synonyms": [
+      "Mike Hussy",
+      "Mike",
+      "Hussy",
+      "Mik",
+        "Mic"
+    ]
   }
 ]
